@@ -1,38 +1,19 @@
+
 import './index.css'
+import * as config from './config'
+import * as util from './util'
 import { data } from  './data'
-import { title, fill_colors, labels } from './config'
 
-const MIN_YEAR = 1950;
-const MAX_YEAR = 2020;
 
-const parseYears = (data) => {
-  const keys = Object.keys(data)
-  const years = keys.map(k => parseInt(k))
-  return years
-}
+/* Plotly Setup */
 
-const parseTrace = (key, data, years) => {
-  const trace = {
-    x: years,
-    y: [],
-    mode: 'none',
-    name: labels[key],
-    stackgroup: 'one',
-    fillcolor: fill_colors[key]
-  }
-  years.forEach((year) => {
-    trace['y'].push(data[year][key])
-  })
-  return trace
-}
-
-const years = parseYears(data)
-const trace_count_96 = parseTrace('count_96', data, years)
-const trace_count_64 = parseTrace('count_64', data, years)
-const trace_count_35 = parseTrace('count_35', data, years)
+const years = util.parseYears(data)
+const trace_count_96 = util.parseTrace('count_96', data, years)
+const trace_count_64 = util.parseTrace('count_64', data, years)
+const trace_count_35 = util.parseTrace('count_35', data, years)
 
 const layout = {
-  title: title
+  title: config.title
 }
 
 const all_traces = [trace_count_96, trace_count_64, trace_count_35]
@@ -40,76 +21,24 @@ const all_traces = [trace_count_96, trace_count_64, trace_count_35]
 Plotly.newPlot('plot', all_traces, layout);
 
 
-/* Setup <select> elements */
+/* Selectors */
 
-let storm_types = {
-    'count_35': {
-      'where': 'USA_WIND<64 AND USA_WIND>=34',
-      'label': 'Named Storms'
-    },
-    'count_64': {
-      'where': 'USA_WIND>=64 AND USA_WIND<96',
-      'label': 'Hurricanes'
-    },
-    'count_96': {
-      'where': 'USA_WIND>=64 AND USA_WIND<96',
-      'label': 'Major Hurricanes'
-    }
-}
-const option_factory = function (value, innerHTML) {
-    var opt = document.createElement('option');
-    opt.value = String(value);
-    opt.innerHTML = String(innerHTML);
-    return opt;
-}
+// State variables
+let storm_where = config.storm_types['count_35']['where']
+let year_start = '2010'
+let year_end = '2020'
 
+// Where clause generator
+const year_where= (start, end) => `YEAR>=${start} AND YEAR<=${end}`
+const where_factory = () => `${year_where(year_start, year_end)} AND ${storm_where}`
+
+// Select storm type
 const storm_select = document.getElementById('storm-type-select')
-for (let key of Object.keys(storm_types)) {
-    let value = storm_types[key]['where']
-    let label = storm_types[key]['label']
-    storm_select.appendChild(option_factory(value, label));
+for (let key of Object.keys(config.storm_types)) {
+    let value = config.storm_types[key]['where']
+    let label = config.storm_types[key]['label']
+    storm_select.appendChild(util.option_factory(value, label));
 }
-
-const year_select = document.getElementById('year-select')
-for (var i = MIN_YEAR; i<=MAX_YEAR; i++){
-    year_select.appendChild(option_factory('YEAR='+String(i), i))
-}
-
-/* Map setup */
-
-let map = L.map('map').setView([37.837, -100.479], 5);
-
-let basemap = L.esri.basemapLayer('Streets').addTo(map);
-
-let storm_where = storm_types['count_35']['where']
-let year_where = 'YEAR=1950'
-
-let where_factory = (w1, w2) => w1 + ' AND ' + w2
-
-// dummy feature for logging
-let f;
-
-let layer = L.esri.featureLayer({
-  url: 'https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/IBTrACS_ALL_list_v04r00_lines_1/FeatureServer/0',
-  style: function (feature) {
-    if (!f) { f = feature;  console.log(feature) }
-    var c;
-    let prop = feature.properties.USA_WIND
-    if (prop < 64 && prop >= 34) { c = 'red' }
-    if (prop >= 64 && prop < 96) { c = 'green' }
-    if (prop >= 96) { c = 'blue' };
-    if (!c) { c = 'white' }
-    return { color: c, opacity: .9, weight: 5 };
-  },
-  where: where_factory(storm_where, year_where)
-}).addTo(map);
-
-year_select.addEventListener('change', function () {
-  year_where = year_select.value
-  let new_where = where_factory(storm_where, year_where)
-  console.log(new_where)
-  layer.setWhere(new_where);
-});
 
 storm_select.addEventListener('change', function () {
   storm_where = storm_select.value
@@ -117,3 +46,47 @@ storm_select.addEventListener('change', function () {
   console.log(new_where)
   layer.setWhere(new_where)
 });
+
+// Select start year
+const year_start_select = util.year_select_factory('start', year_start)
+year_start_select.addEventListener('change', function () {
+  year_start = year_start_select.value
+  let new_where = where_factory()
+  console.log(new_where)
+  layer.setWhere(new_where);
+});
+
+// Select end year
+const year_end_select = util.year_select_factory('end', year_end)
+year_end_select.addEventListener('change', function () {
+  year_end = year_end_select.value
+  let new_where = where_factory()
+  console.log(new_where)
+  layer.setWhere(new_where);
+});
+
+
+/* Map */
+
+const map = L.map('map').setView([37.837, -100.479], 5);
+const basemap = L.esri.basemapLayer('Streets').addTo(map);
+
+// dummy feature for logging
+//let f;
+
+const layer = L.esri.featureLayer({
+  url: 'https://services2.arcgis.com/FiaPA4ga0iQKduv3/ArcGIS/rest/services/IBTrACS_ALL_list_v04r00_lines_1/FeatureServer/0',
+  style: function (feature) {
+    //if (!f) { f = feature;  console.log(feature) }
+    let c;
+    let prop = feature.properties.USA_WIND
+    if (prop < 64 && prop >= 34) { c = 'red' }
+    if (prop >= 64 && prop < 96) { c = 'green' }
+    if (prop >= 96) { c = 'blue' };
+    if (!c) { c = 'white' }
+    return { color: c, opacity: .9, weight: 5 };
+  },
+  where: where_factory()
+}).addTo(map);
+
+

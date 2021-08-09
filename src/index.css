@@ -4,7 +4,8 @@ body {
 }
 
 #menu {
-    position: absolute; top: 0; bottom: 100px; right: 0; left: 0;
+    position: absolute; top: 0; right: 0; left: 0;
+    height: 130px;
     padding: 10px;
 }
 
@@ -13,9 +14,9 @@ body {
 }
 
 #map {
-    position: absolute; top:100px; bottom:0; right: 50%; left:0;
+    position: absolute; top: 150px; bottom:0; right: 50%; left:0;
 }
 
 #plot {
-    position: absolute; top:100px; bottom:0; right: 0; left:50%;
+    position: absolute; top:150px; bottom:0; right: 0; left:50%;
 }
