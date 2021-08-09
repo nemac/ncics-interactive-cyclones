@@ -20,3 +20,7 @@ body {
 #plot {
     position: absolute; top:150px; bottom:0; right: 0; left:50%;
 }
+
+#feature-info {
+    positon: relative; left: 50%;
+}
