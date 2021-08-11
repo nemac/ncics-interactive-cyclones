@@ -5,6 +5,12 @@ import * as util from './util'
 import { data } from  './data'
 
 
+/* State */
+let storm_where = config.storm_types['count_35']['where']
+let year_start = '2010'
+let year_end = '2020'
+
+
 /* Plotly Setup */
 
 const years = util.parseYears(data)
@@ -22,11 +28,6 @@ Plotly.newPlot('plot', all_traces, layout);
 
 
 /* Selectors */
-
-// State variables
-let storm_where = config.storm_types['count_35']['where']
-let year_start = '2010'
-let year_end = '2020'
 
 // Where clause generator
 const year_where= (start, end) => `YEAR>=${start} AND YEAR<=${end}`
