@@ -1,5 +1,5 @@
 
-export let data = {
+export const data = {
   "1950": {
     "count_96": 11.5,
     "count_64": 38,

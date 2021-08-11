@@ -1,7 +1,7 @@
 
 let fs = require('fs')
 
-let csv = 'NA_60w_days_1950-2020.csv'
+let csv = './data/NA_60w_days_1950-2020.csv'
 
 var data = fs.readFileSync(csv, 'utf8')
 

@@ -91,19 +91,27 @@ const layer = L.esri.featureLayer({
 
 let feature_info = document.getElementById('feature-info')
 
-map.on('click', function (event) {
-  let where = where_factory()
-  let radius = 500 // meters
-  let query = layer.query().nearby(event.latlng, radius).where(where)
-  query.run(function (error, featureCollection, response) {
-    if (error) { console.log(error); return; }
-    if (featureCollection.features.length) {
-      let feature = featureCollection.features[0];
-      console.log(feature)
-      let f_str = JSON.stringify(feature)
-      feature_info.innerHTML = f_str
-    } else {
-      feature_info.innerHTML = 'No features selected.'
-    }
-  });
+layer.on('mouseover', function (event) {
+  document.getElementById('feature-info').innerHTML = render_feature(event.layer.feature)
 })
+
+layer.on('mouseout', function (event) {
+  document.getElementById('feature-info').innerHTML = 'Hover over a storm track for more data'
+})
+
+const render_feature = f => {
+  const props = f.properties
+  const display_props = [ 'LAT', 'LON', 'USA_WIND', 'year', 'month', 'day', 'NAME' ]
+  const rendered = `
+    Name: ${props['NAME']} <br>
+    Wind Speed: ${props['USA_WIND']} knots <br>
+    Date: ${props['month']}/${props['day']}/${props['year']} <br>
+    Lat: ${props['LAT']} <br>
+    Lon: ${props['LON']} <br>
+  `
+  return rendered
+}
+
+const render_prop = (key, value) => {
+  return `${key}: ${value}\n`
+}
