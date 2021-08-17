@@ -30,7 +30,7 @@ Plotly.newPlot('plot', all_traces, layout);
 /* Selectors */
 
 // Where clause generator
-const year_where= (start, end) => `YEAR>=${start} AND YEAR<=${end}`
+const year_where = (start, end) => `YEAR>=${start} AND YEAR<=${end}`
 const where_factory = () => `${year_where(year_start, year_end)} AND ${storm_where}`
 
 // Select storm type
@@ -90,14 +90,14 @@ const layer = L.esri.featureLayer({
   where: where_factory()
 }).addTo(map);
 
-let feature_info = document.getElementById('feature-info')
+const feature_info = document.getElementById('feature-info')
 
 layer.on('mouseover', function (event) {
-  document.getElementById('feature-info').innerHTML = render_feature(event.layer.feature)
+  feature_info.innerHTML = render_feature(event.layer.feature)
 })
 
 layer.on('mouseout', function (event) {
-  document.getElementById('feature-info').innerHTML = 'Hover over a storm track for more data'
+  feature_info.innerHTML = 'Hover over a storm track for more data'
 })
 
 const render_feature = f => {
