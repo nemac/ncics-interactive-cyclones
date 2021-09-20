@@ -4,6 +4,9 @@ import * as config from './config'
 import * as util from './util'
 import { data } from  './data'
 
+import * as d3 from 'd3';
+
+window.d3 = d3
 
 /* State */
 let storm_where = config.storm_types['count_35']['where']
@@ -14,22 +17,78 @@ let year_end = '2020'
 /* Plotly Setup */
 
 const years = util.parseYears(data)
+/*
 const trace_count_96 = util.parseTrace('count_96', data, years)
 const trace_count_64 = util.parseTrace('count_64', data, years)
 const trace_count_35 = util.parseTrace('count_35', data, years)
+*/
 
-const layout = {
-  title: config.title
-}
+/*
+Trace data
+  - t1 is named storms, t2 is hurricanes, t3 is major hurricanes
+  - array index is the year (0 is 1950)
+  - array values are number of "storm days" for that year
+*/
 
-const all_traces = [trace_count_96, trace_count_64, trace_count_35]
+const t1 = util.parse(data, 'count_96')
+const t2 = util.parse(data, 'count_64')
+const t3 = util.parse(data, 'count_35')
 
-Plotly.newPlot('plot', all_traces, layout);
+const width = 800
+const height = 600
 
+const margin = { left: 25, right: 0, top: 15, bottom: 30 }
 
-/* Selectors */
+const plot = d3.select('#plot').append('svg')
+    .attr('width', width)
+    .attr('height', height)
+
+const x = d3.scaleLinear()
+  .domain([1950, 2021])
+  .range([margin.left, width - margin.right])
+
+const y = d3.scaleLinear()
+  .domain([0, 100])
+  .range([height - margin.bottom, margin.top])
+
+const yAxis = plot.append('g')
+  .attr('transform', `translate(${margin.left}, 0)`)
+  .call(d3.axisLeft(y))
+
+const xAxis = plot.append('g')
+  .attr('transform', `translate(0, ${height - margin.bottom})`)
+  .call(d3.axisBottom(x)
+    .tickFormat(d3.format(""))
+  )
+
+const line = d3.line()
+  .x(d => x(d.year))
+  .y(d => y(d.value))
+
+const t1_line = plot.append('path')
+  .datum(t3)
+  .attr('d', line(t3))
+  .attr('stroke', 'black')
+  .attr('stroke-width', 1.0)
+  .attr('fill', 'none')
+
+const t2_line = plot.append('path')
+  .datum(t2)
+  .attr('d', line(t2))
+  .attr('stroke', 'black')
+  .attr('stroke-width', 1.0)
+  .attr('fill', 'none')
+
+const t3_line = plot.append('path')
+  .datum(t1)
+  .attr('d', line(t1))
+  .attr('stroke', 'black')
+  .attr('stroke-width', 1.0)
+  .attr('fill', 'none')
 
 // Where clause generator
+/*
+
 const year_where = (start, end) => `YEAR>=${start} AND YEAR<=${end}`
 const where_factory = () => `${year_where(year_start, year_end)} AND ${storm_where}`
 
@@ -65,10 +124,11 @@ year_end_select.addEventListener('change', function () {
   console.log(new_where)
   layer.setWhere(new_where);
 });
-
+*/
 
 /* Map */
 
+/*
 const map = L.map('map').setView([37.837, -100.479], 5);
 const basemap = L.esri.basemapLayer('Streets').addTo(map);
 
@@ -116,3 +176,5 @@ const render_feature = f => {
 const render_prop = (key, value) => {
   return `${key}: ${value}\n`
 }
+
+*/

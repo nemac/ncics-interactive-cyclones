@@ -26,6 +26,15 @@ export const parseYears = (data) => {
   return years
 }
 
+export const parse = (data, key) => {
+  const years = parseYears(data)
+  const trace = []
+  years.forEach((year) => {
+    trace.push({ 'year': year, 'value': data[String(year)][key] })
+  })
+  return trace
+}
+
 export const parseTrace = (key, data, years) => {
   const trace = {
     x: years,
