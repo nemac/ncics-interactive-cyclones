@@ -1,359 +1,359 @@
 
 export const data = {
   "1950": {
-    "count_96": 11.5,
-    "count_64": 38,
-    "count_35": 59.5
+    "major_hurricane": 11.5,
+    "hurricane": 38,
+    "named_storm": 59.5
   },
   "1951": {
-    "count_96": 3.75,
-    "count_64": 23.25,
-    "count_35": 41.75
+    "major_hurricane": 3.75,
+    "hurricane": 23.25,
+    "named_storm": 41.75
   },
   "1952": {
-    "count_96": 2.5,
-    "count_64": 14.25,
-    "count_35": 27
+    "major_hurricane": 2.5,
+    "hurricane": 14.25,
+    "named_storm": 27
   },
   "1953": {
-    "count_96": 3.25,
-    "count_64": 14.25,
-    "count_35": 44
+    "major_hurricane": 3.25,
+    "hurricane": 14.25,
+    "named_storm": 44
   },
   "1954": {
-    "count_96": 7,
-    "count_64": 20.5,
-    "count_35": 45
+    "major_hurricane": 7,
+    "hurricane": 20.5,
+    "named_storm": 45
   },
   "1955": {
-    "count_96": 8.5,
-    "count_64": 33,
-    "count_35": 59.25
+    "major_hurricane": 8.5,
+    "hurricane": 33,
+    "named_storm": 59.25
   },
   "1956": {
-    "count_96": 1.75,
-    "count_64": 10.75,
-    "count_35": 29.5
+    "major_hurricane": 1.75,
+    "hurricane": 10.75,
+    "named_storm": 29.5
   },
   "1957": {
-    "count_96": 0.5,
-    "count_64": 5.5,
-    "count_35": 22.75
+    "major_hurricane": 0.5,
+    "hurricane": 5.5,
+    "named_storm": 22.75
   },
   "1958": {
-    "count_96": 3.75,
-    "count_64": 16.75,
-    "count_35": 41.5
+    "major_hurricane": 3.75,
+    "hurricane": 16.75,
+    "named_storm": 41.5
   },
   "1959": {
-    "count_96": 3.25,
-    "count_64": 12.25,
-    "count_35": 36.25
+    "major_hurricane": 3.25,
+    "hurricane": 12.25,
+    "named_storm": 36.25
   },
   "1960": {
-    "count_96": 6.75,
-    "count_64": 12,
-    "count_35": 27
+    "major_hurricane": 6.75,
+    "hurricane": 12,
+    "named_storm": 27
   },
   "1961": {
-    "count_96": 13.75,
-    "count_64": 24.75,
-    "count_35": 46.25
+    "major_hurricane": 13.75,
+    "hurricane": 24.75,
+    "named_storm": 46.25
   },
   "1962": {
-    "count_96": 0,
-    "count_64": 11.25,
-    "count_35": 25.75
+    "major_hurricane": 0,
+    "hurricane": 11.25,
+    "named_storm": 25.75
   },
   "1963": {
-    "count_96": 3.75,
-    "count_64": 22.75,
-    "count_35": 35.75
+    "major_hurricane": 3.75,
+    "hurricane": 22.75,
+    "named_storm": 35.75
   },
   "1964": {
-    "count_96": 8.75,
-    "count_64": 33,
-    "count_35": 53.5
+    "major_hurricane": 8.75,
+    "hurricane": 33,
+    "named_storm": 53.5
   },
   "1965": {
-    "count_96": 6.25,
-    "count_64": 9.75,
-    "count_35": 21
+    "major_hurricane": 6.25,
+    "hurricane": 9.75,
+    "named_storm": 21
   },
   "1966": {
-    "count_96": 8.75,
-    "count_64": 25.75,
-    "count_35": 36.5
+    "major_hurricane": 8.75,
+    "hurricane": 25.75,
+    "named_storm": 36.5
   },
   "1967": {
-    "count_96": 5.75,
-    "count_64": 18.5,
-    "count_35": 28.75
+    "major_hurricane": 5.75,
+    "hurricane": 18.5,
+    "named_storm": 28.75
   },
   "1968": {
-    "count_96": 0,
-    "count_64": 7.5,
-    "count_35": 20.5
+    "major_hurricane": 0,
+    "hurricane": 7.5,
+    "named_storm": 20.5
   },
   "1969": {
-    "count_96": 4.75,
-    "count_64": 24.5,
-    "count_35": 49.75
+    "major_hurricane": 4.75,
+    "hurricane": 24.5,
+    "named_storm": 49.75
   },
   "1970": {
-    "count_96": 1,
-    "count_64": 6,
-    "count_35": 20.5
+    "major_hurricane": 1,
+    "hurricane": 6,
+    "named_storm": 20.5
   },
   "1971": {
-    "count_96": 1,
-    "count_64": 17.25,
-    "count_35": 46.25
+    "major_hurricane": 1,
+    "hurricane": 17.25,
+    "named_storm": 46.25
   },
   "1972": {
-    "count_96": 0,
-    "count_64": 2.75,
-    "count_35": 17.5
+    "major_hurricane": 0,
+    "hurricane": 2.75,
+    "named_storm": 17.5
   },
   "1973": {
-    "count_96": 0,
-    "count_64": 3.25,
-    "count_35": 20.5
+    "major_hurricane": 0,
+    "hurricane": 3.25,
+    "named_storm": 20.5
   },
   "1974": {
-    "count_96": 3.5,
-    "count_64": 10.5,
-    "count_35": 31.75
+    "major_hurricane": 3.5,
+    "hurricane": 10.5,
+    "named_storm": 31.75
   },
   "1975": {
-    "count_96": 2.25,
-    "count_64": 11.5,
-    "count_35": 25
+    "major_hurricane": 2.25,
+    "hurricane": 11.5,
+    "named_storm": 25
   },
   "1976": {
-    "count_96": 0.75,
-    "count_64": 3.75,
-    "count_35": 15.25
+    "major_hurricane": 0.75,
+    "hurricane": 3.75,
+    "named_storm": 15.25
   },
   "1977": {
-    "count_96": 1,
-    "count_64": 5.25,
-    "count_35": 13.25
+    "major_hurricane": 1,
+    "hurricane": 5.25,
+    "named_storm": 13.25
   },
   "1978": {
-    "count_96": 3,
-    "count_64": 8,
-    "count_35": 22
+    "major_hurricane": 3,
+    "hurricane": 8,
+    "named_storm": 22
   },
   "1979": {
-    "count_96": 4.25,
-    "count_64": 11.75,
-    "count_35": 28.25
+    "major_hurricane": 4.25,
+    "hurricane": 11.75,
+    "named_storm": 28.25
   },
   "1980": {
-    "count_96": 6.25,
-    "count_64": 9.5,
-    "count_35": 22.25
+    "major_hurricane": 6.25,
+    "hurricane": 9.5,
+    "named_storm": 22.25
   },
   "1981": {
-    "count_96": 2.25,
-    "count_64": 11,
-    "count_35": 36
+    "major_hurricane": 2.25,
+    "hurricane": 11,
+    "named_storm": 36
   },
   "1982": {
-    "count_96": 0.75,
-    "count_64": 4,
-    "count_35": 11
+    "major_hurricane": 0.75,
+    "hurricane": 4,
+    "named_storm": 11
   },
   "1983": {
-    "count_96": 0.25,
-    "count_64": 2.25,
-    "count_35": 11.25
+    "major_hurricane": 0.25,
+    "hurricane": 2.25,
+    "named_storm": 11.25
   },
   "1984": {
-    "count_96": 0.75,
-    "count_64": 11.5,
-    "count_35": 32
+    "major_hurricane": 0.75,
+    "hurricane": 11.5,
+    "named_storm": 32
   },
   "1985": {
-    "count_96": 4,
-    "count_64": 18.25,
-    "count_35": 41.5
+    "major_hurricane": 4,
+    "hurricane": 18.25,
+    "named_storm": 41.5
   },
   "1986": {
-    "count_96": 0,
-    "count_64": 2.25,
-    "count_35": 12.75
+    "major_hurricane": 0,
+    "hurricane": 2.25,
+    "named_storm": 12.75
   },
   "1987": {
-    "count_96": 0.5,
-    "count_64": 2.25,
-    "count_35": 12.5
+    "major_hurricane": 0.5,
+    "hurricane": 2.25,
+    "named_storm": 12.5
   },
   "1988": {
-    "count_96": 6.5,
-    "count_64": 12.25,
-    "count_35": 28.5
+    "major_hurricane": 6.5,
+    "hurricane": 12.25,
+    "named_storm": 28.5
   },
   "1989": {
-    "count_96": 3.5,
-    "count_64": 12.5,
-    "count_35": 26
+    "major_hurricane": 3.5,
+    "hurricane": 12.5,
+    "named_storm": 26
   },
   "1990": {
-    "count_96": 0,
-    "count_64": 9.25,
-    "count_35": 25.5
+    "major_hurricane": 0,
+    "hurricane": 9.25,
+    "named_storm": 25.5
   },
   "1991": {
-    "count_96": 1.25,
-    "count_64": 7.25,
-    "count_35": 14.5
+    "major_hurricane": 1.25,
+    "hurricane": 7.25,
+    "named_storm": 14.5
   },
   "1992": {
-    "count_96": 3.5,
-    "count_64": 5,
-    "count_35": 17
+    "major_hurricane": 3.5,
+    "hurricane": 5,
+    "named_storm": 17
   },
   "1993": {
-    "count_96": 0.75,
-    "count_64": 7.5,
-    "count_35": 20.25
+    "major_hurricane": 0.75,
+    "hurricane": 7.5,
+    "named_storm": 20.25
   },
   "1994": {
-    "count_96": 0,
-    "count_64": 1,
-    "count_35": 16
+    "major_hurricane": 0,
+    "hurricane": 1,
+    "named_storm": 16
   },
   "1995": {
-    "count_96": 7.25,
-    "count_64": 34.5,
-    "count_35": 63
+    "major_hurricane": 7.25,
+    "hurricane": 34.5,
+    "named_storm": 63
   },
   "1996": {
-    "count_96": 9.25,
-    "count_64": 29.5,
-    "count_35": 50
+    "major_hurricane": 9.25,
+    "hurricane": 29.5,
+    "named_storm": 50
   },
   "1997": {
-    "count_96": 1.75,
-    "count_64": 5.5,
-    "count_35": 18
+    "major_hurricane": 1.75,
+    "hurricane": 5.5,
+    "named_storm": 18
   },
   "1998": {
-    "count_96": 8,
-    "count_64": 27.5,
-    "count_35": 42.5
+    "major_hurricane": 8,
+    "hurricane": 27.5,
+    "named_storm": 42.5
   },
   "1999": {
-    "count_96": 7.5,
-    "count_64": 26.75,
-    "count_35": 47
+    "major_hurricane": 7.5,
+    "hurricane": 26.75,
+    "named_storm": 47
   },
   "2000": {
-    "count_96": 1.25,
-    "count_64": 10,
-    "count_35": 30.25
+    "major_hurricane": 1.25,
+    "hurricane": 10,
+    "named_storm": 30.25
   },
   "2001": {
-    "count_96": 3.75,
-    "count_64": 15.75,
-    "count_35": 42
+    "major_hurricane": 3.75,
+    "hurricane": 15.75,
+    "named_storm": 42
   },
   "2002": {
-    "count_96": 3,
-    "count_64": 8.75,
-    "count_35": 42.25
+    "major_hurricane": 3,
+    "hurricane": 8.75,
+    "named_storm": 42.25
   },
   "2003": {
-    "count_96": 7.5,
-    "count_64": 14.5,
-    "count_35": 40.5
+    "major_hurricane": 7.5,
+    "hurricane": 14.5,
+    "named_storm": 40.5
   },
   "2004": {
-    "count_96": 14,
-    "count_64": 26.75,
-    "count_35": 51.5
+    "major_hurricane": 14,
+    "hurricane": 26.75,
+    "named_storm": 51.5
   },
   "2005": {
-    "count_96": 17.25,
-    "count_64": 37.25,
-    "count_35": 82.25
+    "major_hurricane": 17.25,
+    "hurricane": 37.25,
+    "named_storm": 82.25
   },
   "2006": {
-    "count_96": 0,
-    "count_64": 3.75,
-    "count_35": 21.25
+    "major_hurricane": 0,
+    "hurricane": 3.75,
+    "named_storm": 21.25
   },
   "2007": {
-    "count_96": 6,
-    "count_64": 10.5,
-    "count_35": 25.25
+    "major_hurricane": 6,
+    "hurricane": 10.5,
+    "named_storm": 25.25
   },
   "2008": {
-    "count_96": 5.5,
-    "count_64": 23.25,
-    "count_35": 64.75
+    "major_hurricane": 5.5,
+    "hurricane": 23.25,
+    "named_storm": 64.75
   },
   "2009": {
-    "count_96": 1.25,
-    "count_64": 5.75,
-    "count_35": 13.25
+    "major_hurricane": 1.25,
+    "hurricane": 5.75,
+    "named_storm": 13.25
   },
   "2010": {
-    "count_96": 4.25,
-    "count_64": 21,
-    "count_35": 51.75
+    "major_hurricane": 4.25,
+    "hurricane": 21,
+    "named_storm": 51.75
   },
   "2011": {
-    "count_96": 4.5,
-    "count_64": 19.25,
-    "count_35": 60
+    "major_hurricane": 4.5,
+    "hurricane": 19.25,
+    "named_storm": 60
   },
   "2012": {
-    "count_96": 0.25,
-    "count_64": 12.25,
-    "count_35": 48
+    "major_hurricane": 0.25,
+    "hurricane": 12.25,
+    "named_storm": 48
   },
   "2013": {
-    "count_96": 0,
-    "count_64": 1.5,
-    "count_35": 14
+    "major_hurricane": 0,
+    "hurricane": 1.5,
+    "named_storm": 14
   },
   "2014": {
-    "count_96": 3.25,
-    "count_64": 12,
-    "count_35": 24.25
+    "major_hurricane": 3.25,
+    "hurricane": 12,
+    "named_storm": 24.25
   },
   "2015": {
-    "count_96": 3.5,
-    "count_64": 7.25,
-    "count_35": 19.75
+    "major_hurricane": 3.5,
+    "hurricane": 7.25,
+    "named_storm": 19.75
   },
   "2016": {
-    "count_96": 8.75,
-    "count_64": 16.25,
-    "count_35": 42.5
+    "major_hurricane": 8.75,
+    "hurricane": 16.25,
+    "named_storm": 42.5
   },
   "2017": {
-    "count_96": 12.25,
-    "count_64": 32.25,
-    "count_35": 59.75
+    "major_hurricane": 12.25,
+    "hurricane": 32.25,
+    "named_storm": 59.75
   },
   "2018": {
-    "count_96": 4,
-    "count_64": 9,
-    "count_35": 24.25
+    "major_hurricane": 4,
+    "hurricane": 9,
+    "named_storm": 24.25
   },
   "2019": {
-    "count_96": 6.25,
-    "count_64": 14.25,
-    "count_35": 39.25
+    "major_hurricane": 6.25,
+    "hurricane": 14.25,
+    "named_storm": 39.25
   },
   "2020": {
-    "count_96": 5.5,
-    "count_64": 28,
-    "count_35": 81
+    "major_hurricane": 5.5,
+    "hurricane": 28,
+    "named_storm": 81
   }
 }
 

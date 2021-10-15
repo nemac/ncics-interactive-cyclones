@@ -13,12 +13,8 @@ body {
     margin: 10px;
 }
 
-#map {
-    position: absolute; top: 150px; bottom:0; right: 50%; left:0;
-}
-
 #plot {
-    position: absolute; top:150px; bottom:0; right: 0; left:50%;
+    position: absolute; top:150px; bottom:0; right: 0; left:10%;
 }
 
 #feature-info {
