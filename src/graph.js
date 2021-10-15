@@ -100,6 +100,9 @@ export class Graph {
     return stateChanged
   }
 
+  update() {
+  }
+
   getActiveData(key) {
     return this.stormTypes[key].dataset.filter(d => {
       return d.year >= this.state.yearStart && d.year <= this.state.yearEnd
@@ -138,9 +141,9 @@ export class Graph {
     }
   }
 
-  hideBars(keys) {
+  removeBars(keys) {
     for (let key of keys) {
-      this.stormTypes[key].bars.transition(1000).attr('height', 0)
+      this.stormTypes[key].bars.transition(1000).attr('height', 0).remove()
     }
   }
 

@@ -7,17 +7,28 @@ import { Graph } from './graph'
 const graph = new Graph(config, data)
 
 
-/* 
+
 // Select storm type
-const stormSelect = document.getElementById('storm-type-select')
-for (let key of Object.keys(config.stormTypes)) {
-    //let value = config.stormTypes[key]['where']
-    let value = key
-    let label = config.stormTypes[key]['label']
-    stormSelect.appendChild(util.optionFactory(value, label));
+const namedStormChk = document.getElementById('show-named-storms')
+const minorHurricaneChk = document.getElementById('show-minor-hurricanes')
+const majorHurricaneChk = document.getElementById('show-major-hurricanes')
+
+const checks = [
+  { 'key': 'named_storm', 'id': 'show-named-storms' },
+  { 'key': 'minor_hurricanes': 'id': 'show-minor-hurricanes' }
+  { 'key': 'major_hurricanes': 'id': 'show-major-hurricanes' }
+]
+
+for (let o of checks) {
+  const el = document.getElementById(o.id)
+  el.addEventListener('change', function () {
+    if (this.checked) {
+      
+    }
+  })
 }
 
-stormSelect.addEventListener('change', function () {
+namedStormChk.addEventListener('change', function () {
   const key = stormSelect.value
   updatePlot(key)
 })

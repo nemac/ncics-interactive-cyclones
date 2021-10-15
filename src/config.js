@@ -5,7 +5,7 @@ export const config = {
   height: 600,
   margin: { left: 25, right: 0, top: 15, bottom: 30 },
   initState: {
-    'yearStart': 2010,
+    'yearStart': 1950,
     'yearEnd': 2020,
     'activeStormTypes': ['named_storm', 'hurricane', 'major_hurricane']
   },
