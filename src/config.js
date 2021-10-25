@@ -31,8 +31,7 @@ export const config = {
   },
   // Don't label every x-axis tick after this many elements
   TICK_LABEL_THRESHOLD: 30,
-  // The number of ticks before setting another label
-  // when TICK_LABEL_THRESHOLD is met
+  // Only relevant when TICK_LABEL_THRESHOLD is met
   TICK_LABEL_STEP: 5
 }
 

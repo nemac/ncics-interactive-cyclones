@@ -63,16 +63,10 @@ export class Graph {
         .attr('transform', 'rotate(-65)')
         .html((d, i, nodes) => {
           if (nodes.length > this.TICK_LABEL_THRESHOLD) {
-            console.log(d)
-            console.log(this.TICK_LABEL_STEP)
-            if (d % this.TICK_LABEL_STEP == 0) {
-              return d
-            } else {
-              return ''
-            }
-          } else {
-            return d
+            if (d % this.TICK_LABEL_STEP == 0) return d
+            return ''
           }
+          return d
         })
   }
 
