@@ -12,7 +12,7 @@ export const config = {
       'label': 'Named Storms',
       'legend_label': 'Named Storms (>= 34kt)',
       'fill': '#C6DBEF',
-      'active': false
+      'active': true
     },
     'hurricane': {
       'where': 'USA_WIND>=64 AND USA_WIND<96',
