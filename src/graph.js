@@ -1,5 +1,6 @@
 
-import * as d3 from 'd3';
+import * as util from './util'
+import * as d3 from 'd3'
 
 export class Graph {
 
@@ -7,30 +8,39 @@ export class Graph {
     this.title = config.title
     this.data = data
     this.years = Object.keys(data).map(d => parseInt(d))
-    this.MIN_YEAR = this.years[0]
-    this.MAX_YEAR = this.years[this.years.length-1]
+    this.MIN_YEAR = util.getMinYear(this.data)
+    this.MAX_YEAR = util.getMaxYear(this.data)
+    this.TICK_LABEL_THRESHOLD = config.TICK_LABEL_THRESHOLD
+    this.TICK_LABEL_STEP = config.TICK_LABEL_STEP
+    this.yearStart = config.yearStart
+    this.yearEnd = config.yearEnd
     this.stormTypes = config.stormTypes
     this.margin = config.margin
     this.width = config.width
     this.height = config.height
-    this.state = config.initState
 
     this.plot = this.initPlot()
     this.datasets = this.initDatasets(Object.keys(config.stormTypes))
+
     this.x = this.initXScale()
     this.y = this.initYScale()
     this.yAxis = this.initYAxis()
-    this.xAxis = this.initXAxis()
-    this.bars = this.initBars()
-    this.showBars(config.initState.activeStormTypes)
+    this.xAxis = this.appendXAxis()
+    this.initXAxis()
+
+    Object.keys(config.stormTypes).forEach(key => this.initBars(key))
+    const initStormTypes = Object.keys(this.stormTypes).filter(key => this.stormTypes[key].active)
+    initStormTypes.forEach(key => this.showBars(key))
+  }
+
+  getXDomain() {
+    return [...Array(this.yearEnd-this.yearStart+1).keys()].map(d => d+this.yearStart)
   }
 
   initXScale() {
-    const domain = [...Array(this.state.yearEnd-this.state.yearStart+1).keys()].map(d => d+this.state.yearStart)
     return d3.scaleBand()
-      .domain(domain)
+      .domain(this.getXDomain())
       .range([this.margin.left, this.width - this.margin.right])
-      .padding(0.1)
   }
 
   initYScale() {
@@ -39,10 +49,31 @@ export class Graph {
       .range([this.height - this.margin.bottom, this.margin.top])
   }
 
-  initXAxis() {
+  appendXAxis() {
     return this.plot.append('g')  
       .attr('transform', `translate(0, ${this.height - this.margin.bottom})`)
-      .call(d3.axisBottom(this.x).tickFormat(d3.format("")))
+  }
+
+  initXAxis() {
+    this.xAxis.call(d3.axisBottom(this.x))
+      .selectAll('text')
+        .style('text-anchor', 'end')
+        .attr('dx', '-.8em')
+        .attr('dy', '.15em')
+        .attr('transform', 'rotate(-65)')
+        .html((d, i, nodes) => {
+          if (nodes.length > this.TICK_LABEL_THRESHOLD) {
+            console.log(d)
+            console.log(this.TICK_LABEL_STEP)
+            if (d % this.TICK_LABEL_STEP == 0) {
+              return d
+            } else {
+              return ''
+            }
+          } else {
+            return d
+          }
+        })
   }
 
   initYAxis() {
@@ -62,14 +93,14 @@ export class Graph {
     const years = []
     for (let d of keys) {
       const yr = parseInt(d)
-      if (yr < this.state.yearStart || yr > this.state.yearEnd) continue
+      if (yr < this.yearStart || yr > this.yearEnd) continue
       years.push(yr)
     }
     return years
   }
 
-  initDatasets(keys) {
-    for (let key of keys) {
+  initDatasets() {
+    for (let key of Object.keys(this.stormTypes)) {
       const dataset = []
       for (let year of this.years) {
         dataset.push({ 'year': year, 'value': this.data[String(year)][key] })
@@ -89,33 +120,46 @@ export class Graph {
     return parseInt(max / 10) * 10 + 10
   }
 
-  setState(newState) {
-    let stateChanged = false;
-    for (let key of newState) {
-      if (key in this.state) {
-        this.state[key] = newState[key]
-        stateChanged = true
-      }
-    }
-    return stateChanged
-  }
-
-  update() {
-  }
-
   getActiveData(key) {
     return this.stormTypes[key].dataset.filter(d => {
-      return d.year >= this.state.yearStart && d.year <= this.state.yearEnd
+      return d.year >= this.yearStart && d.year <= this.yearEnd
     })
   }
 
-  initBars() {
+  updateYearStart(newYearStart) {
+    this.yearStart = newYearStart
+    this.update()
+  }
+
+  updateYearEnd(newYearEnd) {
+    this.yearEnd = newYearEnd
+    this.update()
+  }
+
+  update() {
+    this.x.domain(this.getXDomain())
+    this.initXAxis(true)
     for (let key of Object.keys(this.stormTypes)) {
-      const dataset = this.getActiveData(key)
-      const bars = this.plot.append('g')
-        .attr('class', 'data-bars')
-        .attr('id', `data-bars--${key}`)
-        .selectAll('rect')
+      this.removeBars(key)
+      this.initBars(key)
+    }
+    for (let key of this.getActiveStormTypes()) {
+      this.showBars(key)
+    }
+  }
+
+  getActiveStormTypes() {
+    return Object.keys(this.stormTypes).filter(key => {
+      return this.stormTypes[key].active
+    })
+  }
+
+  initBars(key) {
+    const dataset = this.getActiveData(key)
+    const bars = this.plot.append('g')
+      .attr('class', 'data-bars')
+      .attr('id', `data-bars--${key}`)
+      .selectAll('rect')
         .data(dataset)
         .enter()
           .append('rect')
@@ -123,28 +167,31 @@ export class Graph {
           .attr('data-year', d => d.year)
           .attr('data-value', d => d.value)
 
-      bars.attr('height', 0)
-          .attr('width', this.x.bandwidth())
-          .attr('x', d => this.x(d.year))
-          .attr('y', this.y(0))
-          .attr('fill', this.stormTypes[key].fill)
+    bars.attr('height', 0)
+        .attr('width', this.x.bandwidth())
+        .attr('x', d => this.x(d.year))
+        .attr('y', this.y(0))
+        .attr('fill', this.stormTypes[key].fill)
 
-      this.stormTypes[key].bars = bars
-    }
+    this.stormTypes[key].bars = bars
   }
 
-  showBars(keys) {
-    for (let key of keys) {
-      this.stormTypes[key].bars.transition(1000)
-        .attr('y', d => this.y(d.value))
-        .attr('height', d => this.y(0) - this.y(d.value))
-    }
+  showBars(key) {
+    this.stormTypes[key].bars.transition(1000)
+      .attr('y', d => this.y(d.value))
+      .attr('height', d => this.y(0) - this.y(d.value))
   }
 
-  removeBars(keys) {
-    for (let key of keys) {
-      this.stormTypes[key].bars.transition(1000).attr('height', 0).remove()
-    }
+  hideBars(key) {
+    this.stormTypes[key].bars.transition(1000)
+      .attr('y', d => this.y(0))
+      .attr('height', 0)
+  }
+
+  removeBars(key) {
+    this.hideBars(key)
+    this.stormTypes[key].bars.remove()
+    this.stormTypes[key].bars = []
   }
 
 }

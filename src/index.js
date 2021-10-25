@@ -4,50 +4,56 @@ import { config } from './config'
 import { data }  from './data'
 import { Graph } from './graph'
 
+import * as util from './util'
+
+const minYear = util.getMinYear(data)
+const maxYear = util.getMaxYear(data)
+
 const graph = new Graph(config, data)
 
+const checkboxIds = {
+  'named_storm': 'show-named-storms',
+  'hurricane': 'show-minor-hurricanes',
+  'major_hurricane': 'show-major-hurricanes'
+}
 
-
-// Select storm type
-const namedStormChk = document.getElementById('show-named-storms')
-const minorHurricaneChk = document.getElementById('show-minor-hurricanes')
-const majorHurricaneChk = document.getElementById('show-major-hurricanes')
-
-const checks = [
-  { 'key': 'named_storm', 'id': 'show-named-storms' },
-  { 'key': 'minor_hurricanes': 'id': 'show-minor-hurricanes' }
-  { 'key': 'major_hurricanes': 'id': 'show-major-hurricanes' }
-]
-
-for (let o of checks) {
-  const el = document.getElementById(o.id)
+for (let key of Object.keys(checkboxIds)) {
+  const el = document.getElementById(checkboxIds[key])
+  el.checked = config.stormTypes[key].active
   el.addEventListener('change', function () {
     if (this.checked) {
-      
+      graph.stormTypes[key].active = true
+      graph.showBars(key)
+    } else {
+      graph.stormTypes[key].active = false
+      graph.hideBars(key)
     }
   })
 }
 
-namedStormChk.addEventListener('change', function () {
-  const key = stormSelect.value
-  updatePlot(key)
-})
+let selectedStartYear = graph.yearStart
+let selectedEndYear = graph.yearEnd
 
-// Select start year
-const yearStartSelect = util.yearSelectFactory('start', state.yearStart)
+const yearStartSelect = util.setupYearSelect('start', selectedStartYear, minYear, maxYear)
+const yearEndSelect = util.setupYearSelect('end', selectedEndYear, minYear, maxYear)
+
 yearStartSelect.addEventListener('change', function () {
-  state.yearStart = parseInt(yearStartSelect.value)
-  updatePlot()
+  selectedStartYear = parseInt(yearStartSelect.value)
+  graph.updateYearStart(selectedStartYear)
+  util.setupYearSelect('end', selectedEndYear, selectedStartYear, graph.MAX_YEAR)
 })
 
-// Select end year
-const yearEndSelect = util.yearSelectFactory('end', state.yearEnd)
 yearEndSelect.addEventListener('change', function () {
-  state.yearEnd = parseInt(yearEndSelect.value)
-  updatePlot()
+  selectedEndYear = parseInt(yearEndSelect.value)
+  graph.updateYearEnd(selectedEndYear)
+  util.setupYearSelect('start', selectedStartYear, graph.MIN_YEAR, selectedEndYear)
 })
 
-updatePlot('all')
+/* Init State
+  'yearStart': 1950,
+  'yearEnd': 2020,
+  'activeStormTypes': ['named_storm', 'hurricane', 'major_hurricane']
+*/
 
 // Map
 // Where clause generator
@@ -55,7 +61,7 @@ updatePlot('all')
 //const year_where = (start, end) => `YEAR>=${start} AND YEAR<=${end}`
 //const where_factory = () => `${year_where(yearStart, yearEnd)} AND ${storm_where}`
 
-
+/*
 const map = L.map('map').setView([37.837, -100.479], 5);
 const basemap = L.esri.basemapLayer('Streets').addTo(map);
 
