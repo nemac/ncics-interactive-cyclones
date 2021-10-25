@@ -1,43 +1,49 @@
 import * as config from './config'
 
-export const option_factory = function (value, innerHTML) {
+export const getMaxYear = (data) => {
+  let max = 0
+  for (let k of Object.keys(data)) {
+    k = parseInt(k)
+    if (k > max) { max = k }
+  }
+  return max
+}
+
+export const getMinYear = (data) => {
+  let min = 10000
+  for (let k of Object.keys(data)) {
+    k = parseInt(k)
+    if (k < min) { min = k }
+  }
+  return min
+}
+
+export const optionFactory = function (value, innerHTML) {
     var opt = document.createElement('option');
     opt.value = String(value);
     opt.innerHTML = String(innerHTML);
     return opt;
 }
 
-export const year_select_factory = (label, year_selected) => {
-  const year_select = document.getElementById(`year-${label}-select`)
-  let selected_index;
+
+const removeChildNodes = (parent) => {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild)
+  }
+}
+
+export const setupYearSelect = (label, yearSelected, minYear, maxYear) => {
+  const yearSelect = document.getElementById(`year-${label}-select`)
+  removeChildNodes(yearSelect)
+  let selectedIndex;
   let index = 0;
-  for (var y = config.MIN_YEAR; y<=config.MAX_YEAR; y++){
-      if (parseInt(year_selected) == y) { selected_index = index }
-      year_select.appendChild(option_factory(String(y), String(y)))
+  for (var y = minYear; y<=maxYear; y++){
+      if (parseInt(yearSelected) == y) { selectedIndex = index }
+      yearSelect.appendChild(optionFactory(String(y), String(y)))
       index++;
   }
-  year_select.options.selectedIndex=selected_index
-  return year_select
+  yearSelect.options.selectedIndex=selectedIndex
+  return yearSelect
 }
 
-export const parseYears = (data) => {
-  const keys = Object.keys(data)
-  const years = keys.map(k => parseInt(k))
-  return years
-}
-
-export const parseTrace = (key, data, years) => {
-  const trace = {
-    x: years,
-    y: [],
-    mode: 'none',
-    name: config.legend_labels[key],
-    stackgroup: 'one',
-    fillcolor: config.fill_colors[key]
-  }
-  years.forEach((year) => {
-    trace['y'].push(data[year][key])
-  })
-  return trace
-}
 
