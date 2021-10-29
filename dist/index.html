@@ -19,39 +19,25 @@
 </head>
 
 <body>
-  <div id='menu'>
-    <div id="show-storm-types">
-      <label>
-        Named Storms
-        <input type="checkbox" id='show-named-storms'/>
-      </label>
-      <label>
-        Minor Hurricanes
-        <input type="checkbox" id='show-minor-hurricanes'/>
-      </label>
-      <label>
-        Major Hurricanes
-        <input type="checkbox" id='show-major-hurricanes'/>
-      </label>
+  <h2 id='graph-title'>Tropical Cyclone Days for the North Atlantic west of 60°</h2>
+  <div id='graph-container'>
+    <div id='plot'>
     </div>
-    <div id="year-start-query">
-      <label>
-        Start:
-        <select id="year-start-select">
-        </select>
-      </label>
+    <div id='menu'>
+      <div id="show-storm-types">
+        <label><input type="checkbox" id='show-named-storms'/>Named Storms</label>
+        <label><input type="checkbox" id='show-minor-hurricanes'/>Minor Hurricanes</label>
+        <label><input type="checkbox" id='show-major-hurricanes'/>Major Hurricanes</label>
+      </div>
+      <div id="year-select">
+        <div id="year-start-query">
+          <label>Start: <select id="year-start-select"></select></label>
+        </div>
+        <div id="year-start-query">
+          <label>End: <select id="year-end-select"></select></label>
+        </div>
+      </div>
     </div>
-     <div id="year-start-query">
-      <label>
-        End:
-        <select id="year-end-select">
-        </select>
-      </label>
-    </div>
-    <div id="metadata-info">
-    </div>
-  </div>
-  <div id='plot'>
   </div>
 </body>
 

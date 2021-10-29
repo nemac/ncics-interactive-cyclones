@@ -6,6 +6,7 @@ export class Graph {
 
   constructor(config, data) {
     this.title = config.title
+    this.yAxisTitle = config.yAxisTitle
     this.data = data
     this.years = Object.keys(data).map(d => parseInt(d))
     this.MIN_YEAR = util.getMinYear(this.data)
@@ -27,10 +28,25 @@ export class Graph {
     this.yAxis = this.initYAxis()
     this.xAxis = this.appendXAxis()
     this.initXAxis()
+    this.setYAxisTitle()
 
     Object.keys(config.stormTypes).forEach(key => this.initBars(key))
     const initStormTypes = Object.keys(this.stormTypes).filter(key => this.stormTypes[key].active)
     initStormTypes.forEach(key => this.showBars(key))
+  }
+
+  setYAxisTitle() {
+    this.plot.append('text')
+      .attr('id', 'y-axis-title')
+      .attr('transform', `rotate(-90) translate(-${this.height/5}, 30)`)
+      .attr('text-anchor', 'end')
+      .html(this.yAxisTitle)
+  }
+
+  initPlot() {
+    return d3.select('#plot').append('svg')
+      .attr('width', this.width)
+      .attr('height', this.height)
   }
 
   getXDomain() {
@@ -58,7 +74,7 @@ export class Graph {
     this.xAxis.call(d3.axisBottom(this.x))
       .selectAll('text')
         .style('text-anchor', 'end')
-        .attr('dx', '-.8em')
+        .attr('dx', '-.5em')
         .attr('dy', '.15em')
         .attr('transform', 'rotate(-65)')
         .html((d, i, nodes) => {
@@ -76,11 +92,6 @@ export class Graph {
       .call(d3.axisLeft(this.y))
   }
 
-  initPlot() {
-    return d3.select('#plot').append('svg')
-      .attr('width', this.width)
-      .attr('height', this.height)
-  }
 
   calcActiveYears() {
     const keys = Object.keys(this.data)
@@ -189,24 +200,4 @@ export class Graph {
   }
 
 }
-
-/*
-const updatePlot = (key) => {
-  state.datasets.forEach(t => !t.bars || hideBars(t.bars))
-  state = util.setState(state, key)
-  datasets = stormType ? getTraces(stormType, state) : state.datasets
-  state.datasets = datasets
-  state.max = calcMax(datasets)
-  state.years = parseYears(data, state.yearStart, state.yearEnd)
-  y.domain([0, state.max])
-  x.domain([state.yearStart, state.yearEnd])
-  xAxis.transition(1000)
-    .call(d3.axisBottom(x).tickFormat(d3.format("")))
-  yAxis.transition(1000).call(d3.axisLeft(y))
-  for (let t of state.datasets) {
-    t.bars = rectify(t, state.years)
-    showBars(t.bars)
-  }
-}
-*/
 
