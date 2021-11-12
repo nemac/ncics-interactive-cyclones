@@ -30,9 +30,11 @@ export const config = {
       'active': true
     }
   },
-  // Don't label every x-axis tick after this many elements
+  // Stop labelling every x-axis tick after this many elements
   TICK_LABEL_THRESHOLD: 30,
-  // Only relevant when TICK_LABEL_THRESHOLD is met
-  TICK_LABEL_STEP: 5
+  // Number of ticks between labels once TICK_LABEL_THRESDHOLD is met (inclusive)
+  TICK_LABEL_STEP: 5,
+  // This should be consistent with the height value in the CSS
+  TOOLTIP_HEIGHT: 50
 }
 

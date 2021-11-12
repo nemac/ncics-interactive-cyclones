@@ -4,34 +4,53 @@ import * as util from './util'
 export class Graph {
 
   constructor(config, data) {
-    this.title = config.title
-    this.yAxisTitle = config.yAxisTitle
-    this.data = data
-    this.years = Object.keys(data).map(d => parseInt(d))
-    this.MIN_YEAR = util.getMinYear(this.data)
-    this.MAX_YEAR = util.getMaxYear(this.data)
+    this.MIN_YEAR = util.getMinYear(data)
+    this.MAX_YEAR = util.getMaxYear(data)
     this.TICK_LABEL_THRESHOLD = config.TICK_LABEL_THRESHOLD
     this.TICK_LABEL_STEP = config.TICK_LABEL_STEP
+    this.TOOLTIP_HEIGHT = config.TOOLTIP_HEIGHT
+
+    this.data = data
+    this.title = config.title
+    this.yAxisTitle = config.yAxisTitle
+    this.years = Object.keys(data).map(d => parseInt(d))
     this.yearStart = config.yearStart
     this.yearEnd = config.yearEnd
     this.stormTypes = config.stormTypes
     this.margin = config.margin
     this.width = config.width
     this.height = config.height
-
     this.plot = this.initPlot()
     this.datasets = this.initDatasets(Object.keys(config.stormTypes))
-
     this.x = this.initXScale()
     this.y = this.initYScale()
-    this.yAxis = this.initYAxis()
+
+    // Insert SVG elements
+
+    // SVG elements inserted into the DOM first are painted first
+    // So we add the axes and tooltips last so they show up over the bars
+    // See https://www.w3.org/TR/SVG11/render.html#RenderingOrder
+
+    // Initialize data bars with zero height
+    Object.keys(config.stormTypes).forEach(key => {
+      this.initBars(key)
+    })
+
+    // Draw the axes
     this.xAxis = this.appendXAxis()
     this.initXAxis()
     this.setYAxisTitle()
+    this.yAxis = this.initYAxis()
 
-    Object.keys(config.stormTypes).forEach(key => this.initBars(key))
+    // Show the bars for initially activated storm types
     const initStormTypes = Object.keys(this.stormTypes).filter(key => this.stormTypes[key].active)
     initStormTypes.forEach(key => this.showBars(key))
+
+    // Draw the tooltips
+    Object.keys(config.stormTypes).forEach(key => {
+      this.initTooltips(key)
+    })
+
   }
 
   setYAxisTitle() {
@@ -176,8 +195,68 @@ export class Graph {
         .attr('x', d => this.x(d.year))
         .attr('y', this.y(0))
         .attr('fill', this.stormTypes[key].fill)
+        .on('mouseenter', d => this.toggleTooltip(key, d.year, true))
+        .on('mouseout', d => this.toggleTooltip(key, d.year, false))
 
     this.stormTypes[key].bars = bars
+  }
+
+  toggleTooltip(key, year, showTooltip) {
+    d3.select(`#data-tooltip--${key}--${year}--rect`)
+      .attr('style', showTooltip ? '' : 'display: none')
+      .raise()
+    d3.select(`#data-tooltip--${key}--${year}--text`)
+      .attr('style', showTooltip ? '' : 'display: none')
+      .raise()
+  }
+
+  initTooltips(key) {
+    const dataset = this.getActiveData(key)
+    const tooltips = this.plot.append('g')
+      .attr('class', 'data-tooltips')
+      .attr('id', `data-tooltips--${key}`)
+      .selectAll('rect')
+        .data(dataset)
+        .enter()
+          .append('rect')
+            .attr('id', d => `data-tooltip--${key}--${d.year}--rect`)
+            .attr('class', 'tooltip')
+            .attr('x', d => this.x(d.year) + this.x.bandwidth())
+            .attr('y', d => this.y(d.value) - this.TOOLTIP_HEIGHT)
+            .attr('style', 'display: none;')
+            .attr('data-year', d => d.year)
+            .attr('data-value', d => d.value)
+            .attr('fill', 'white')
+            .attr('stroke', 'blue')
+            .attr('stroke-width', '2')
+
+    const tooltip_text = this.plot.select(`#data-tooltips--${key}`)
+      .selectAll('text')
+        .data(dataset)
+          .enter(tooltips)
+            .append('text')
+              .attr('id', d => `data-tooltip--${key}--${d.year}--text`)
+              .attr('style', 'display: none')
+              .attr('text-anchor', 'start')
+              .attr('x', d => this.x(d.year) + this.x.bandwidth())
+              .attr('y', d => this.y(d.value))
+
+    const text_margin = {
+      left: 5,
+      top: 5
+    }
+
+    tooltip_text.append('tspan')
+      .attr('x', d => this.x(d.year) + this.x.bandwidth() + text_margin.left)
+      .attr('y', d => this.y(d.value) - this.TOOLTIP_HEIGHT/2 - text_margin.top)
+      .html(d => `Year: ${d.year}`)
+
+    tooltip_text.append('tspan')
+      .attr('x', d => this.x(d.year) + this.x.bandwidth() + text_margin.left)
+      .attr('y', d => this.y(d.value) - text_margin.top)
+      .html(d => `Value: ${d.value}`)
+
+    this.stormTypes[key].tooltips = tooltips
   }
 
   showBars(key) {
