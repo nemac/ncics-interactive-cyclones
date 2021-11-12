@@ -28,8 +28,8 @@ export class Graph {
 
     // Insert SVG elements
 
-    // SVG elements inserted into the DOM first are painted first
-    // So we add the axes and tooltips last so they show up over the bars
+    // SVG elements are painted in the order they are inserted,
+    // so we add the axes and tooltips last so they show up over the bars
     // See https://www.w3.org/TR/SVG11/render.html#RenderingOrder
 
     // Initialize data bars with zero height
@@ -43,14 +43,14 @@ export class Graph {
     this.setYAxisTitle()
     this.yAxis = this.initYAxis()
 
-    // Show the bars for initially activated storm types
-    const initStormTypes = Object.keys(this.stormTypes).filter(key => this.stormTypes[key].active)
-    initStormTypes.forEach(key => this.showBars(key))
-
     // Draw the tooltips
     Object.keys(config.stormTypes).forEach(key => {
       this.initTooltips(key)
     })
+
+    // Show the bars for initially activated storm types
+    const initStormTypes = Object.keys(this.stormTypes).filter(key => this.stormTypes[key].active)
+    initStormTypes.forEach(key => this.showBars(key))
 
   }
 
@@ -86,7 +86,12 @@ export class Graph {
 
   appendXAxis() {
     return this.plot.append('g')  
+      .attr('id', 'x-axis')
       .attr('transform', `translate(0, ${this.height - this.margin.bottom})`)
+  }
+
+  removeXAxis() {
+    d3.select('#x-axis').remove()
   }
 
   initXAxis() {
@@ -162,13 +167,21 @@ export class Graph {
 
   update() {
     this.x.domain(this.getXDomain())
-    this.initXAxis(true)
+    this.removeTooltips()
     for (let key of Object.keys(this.stormTypes)) {
       this.removeBars(key)
       this.initBars(key)
     }
     for (let key of this.getActiveStormTypes()) {
       this.showBars(key)
+    }
+    this.removeXAxis()
+    this.xAxis = this.appendXAxis()
+    this.initXAxis()
+    this.yAxis = this.initYAxis()
+    // Keep separate loop for correct drawing order
+    for (let key of Object.keys(this.stormTypes)) {
+      this.initTooltips(key)
     }
   }
 
@@ -217,6 +230,14 @@ export class Graph {
     return normal - this.TOOLTIP_WIDTH - this.x.bandwidth()
   }
 
+  calcTooltipY(d) {
+    // TODO
+  }
+
+  removeTooltips() {
+    d3.selectAll('.data-tooltips').remove()
+  }
+
   initTooltips(key) {
     const dataset = this.getActiveData(key)
     const tooltips = this.plot.append('g')
@@ -234,8 +255,8 @@ export class Graph {
             .attr('data-year', d => d.year)
             .attr('data-value', d => d.value)
             .attr('fill', 'white')
-            .attr('stroke', 'blue')
-            .attr('stroke-width', '2')
+            .attr('stroke', this.stormTypes[key].fill)
+            .attr('stroke-width', '1.5')
 
     const tooltip_text = this.plot.select(`#data-tooltips--${key}`)
       .selectAll('text')
@@ -248,7 +269,7 @@ export class Graph {
               .attr('x', d => this.calcTooltipX(d))
               .attr('y', d => this.y(d.value))
 
-    const text_margin = { left: 5, top: 5 }
+    const text_margin = { left: 8, top: 8 }
 
     tooltip_text.append('tspan')
       .attr('x', d => this.calcTooltipX(d) + text_margin.left)

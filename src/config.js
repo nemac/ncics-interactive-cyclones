@@ -38,7 +38,7 @@ export const config = {
   // Number of ticks between labels once TICK_LABEL_THRESDHOLD is met (inclusive)
   TICK_LABEL_STEP: 5,
   // These should be consistent with the CSS
-  TOOLTIP_HEIGHT: 50,
+  TOOLTIP_HEIGHT: 60,
   TOOLTIP_WIDTH: 180
 }
 
