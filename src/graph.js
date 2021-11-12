@@ -8,6 +8,7 @@ export class Graph {
     this.MAX_YEAR = util.getMaxYear(data)
     this.TICK_LABEL_THRESHOLD = config.TICK_LABEL_THRESHOLD
     this.TICK_LABEL_STEP = config.TICK_LABEL_STEP
+    this.TOOLTIP_WIDTH = config.TOOLTIP_WIDTH
     this.TOOLTIP_HEIGHT = config.TOOLTIP_HEIGHT
 
     this.data = data
@@ -210,6 +211,12 @@ export class Graph {
       .raise()
   }
 
+  calcTooltipX(d) {
+    const normal = this.x(d.year) + this.x.bandwidth()
+    if (normal + this.TOOLTIP_WIDTH < this.x.range()[1]) return normal
+    return normal - this.TOOLTIP_WIDTH - this.x.bandwidth()
+  }
+
   initTooltips(key) {
     const dataset = this.getActiveData(key)
     const tooltips = this.plot.append('g')
@@ -221,7 +228,7 @@ export class Graph {
           .append('rect')
             .attr('id', d => `data-tooltip--${key}--${d.year}--rect`)
             .attr('class', 'tooltip')
-            .attr('x', d => this.x(d.year) + this.x.bandwidth())
+            .attr('x', d => this.calcTooltipX(d))
             .attr('y', d => this.y(d.value) - this.TOOLTIP_HEIGHT)
             .attr('style', 'display: none;')
             .attr('data-year', d => d.year)
@@ -238,23 +245,20 @@ export class Graph {
               .attr('id', d => `data-tooltip--${key}--${d.year}--text`)
               .attr('style', 'display: none')
               .attr('text-anchor', 'start')
-              .attr('x', d => this.x(d.year) + this.x.bandwidth())
+              .attr('x', d => this.calcTooltipX(d))
               .attr('y', d => this.y(d.value))
 
-    const text_margin = {
-      left: 5,
-      top: 5
-    }
+    const text_margin = { left: 5, top: 5 }
 
     tooltip_text.append('tspan')
-      .attr('x', d => this.x(d.year) + this.x.bandwidth() + text_margin.left)
+      .attr('x', d => this.calcTooltipX(d) + text_margin.left)
       .attr('y', d => this.y(d.value) - this.TOOLTIP_HEIGHT/2 - text_margin.top)
       .html(d => `Year: ${d.year}`)
 
     tooltip_text.append('tspan')
-      .attr('x', d => this.x(d.year) + this.x.bandwidth() + text_margin.left)
+      .attr('x', d => this.calcTooltipX(d) + text_margin.left)
       .attr('y', d => this.y(d.value) - text_margin.top)
-      .html(d => `Value: ${d.value}`)
+      .html(d => `${this.stormTypes[key].tooltip}: ${d.value}`)
 
     this.stormTypes[key].tooltips = tooltips
   }

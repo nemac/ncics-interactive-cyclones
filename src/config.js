@@ -11,6 +11,7 @@ export const config = {
     'named_storm': {
       'where': 'USA_WIND<64 AND USA_WIND>=34',
       'label': 'Named Storms',
+      'tooltip': 'Named Storm Days',
       'legend_label': 'Named Storms (>= 34kt)',
       'fill': '#C6DBEF',
       'active': true
@@ -18,6 +19,7 @@ export const config = {
     'hurricane': {
       'where': 'USA_WIND>=64 AND USA_WIND<96',
       'label': 'Hurricanes',
+      'tooltip': 'Hurricane Days',
       'legend_label': 'Hurricanes (>=64kt)',
       'fill': '#6BAED6',
       'active': true
@@ -25,6 +27,7 @@ export const config = {
     'major_hurricane': {
       'where': 'USA_WIND>=96',
       'label': 'Major Hurricanes',
+      'tooltip': 'Major Hurricane Days',
       'legend_label': 'Major Hurricanes (>= 96kt)',
       'fill': '#08519C',
       'active': true
@@ -34,7 +37,8 @@ export const config = {
   TICK_LABEL_THRESHOLD: 30,
   // Number of ticks between labels once TICK_LABEL_THRESDHOLD is met (inclusive)
   TICK_LABEL_STEP: 5,
-  // This should be consistent with the height value in the CSS
-  TOOLTIP_HEIGHT: 50
+  // These should be consistent with the CSS
+  TOOLTIP_HEIGHT: 50,
+  TOOLTIP_WIDTH: 180
 }
 
