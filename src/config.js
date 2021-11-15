@@ -9,7 +9,7 @@ export const config = {
   yAxisTitle: 'Tropical Cyclone Days (per year)',
   stormTypes: {
     'named_storm': {
-      'where': 'USA_WIND>=34',
+      'where': "USA_WIND>=34 AND BASIN = 'NA'",
       'label': 'Named Storms',
       'tooltip': 'Named Storm Days',
       'legend_label': 'Named Storms (>= 34kt)',
@@ -17,7 +17,7 @@ export const config = {
       'active': true
     },
     'hurricane': {
-      'where': 'USA_WIND>=64',
+      'where': "USA_WIND>=64 AND BASIN = 'NA'",
       'label': 'Hurricanes',
       'tooltip': 'Hurricane Days',
       'legend_label': 'Hurricanes (>=64kt)',
@@ -25,7 +25,7 @@ export const config = {
       'active': true
     },
     'major_hurricane': {
-      'where': 'USA_WIND>=96',
+      'where': "USA_WIND>=96 AND BASIN = 'NA'",
       'label': 'Major Hurricanes',
       'tooltip': 'Major Hurricane Days',
       'legend_label': 'Major Hurricanes (>= 96kt)',
