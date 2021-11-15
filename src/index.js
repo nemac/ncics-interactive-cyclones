@@ -49,21 +49,18 @@ yearEndSelect.addEventListener('change', function () {
   util.setupYearSelect('start', selectedStartYear, graph.MIN_YEAR, selectedEndYear)
 })
 
-/* Init State
-  'yearStart': 1950,
-  'yearEnd': 2020,
-  'activeStormTypes': ['named_storm', 'hurricane', 'major_hurricane']
-*/
-
 // Map
 // Where clause generator
 
-//const year_where = (start, end) => `YEAR>=${start} AND YEAR<=${end}`
-//const where_factory = () => `${year_where(yearStart, yearEnd)} AND ${storm_where}`
+const fitBounds = [
+  {lat: 50.0, lng: -60},
+  {lat: 5, lng: -100}
+]
+const map = L.map('map').fitBounds(fitBounds)
 
-/*
-const map = L.map('map').setView([37.837, -100.479], 5);
 const basemap = L.esri.basemapLayer('Streets').addTo(map);
+
+window.map = map
 
 // dummy feature for logging
 //let f;
@@ -74,15 +71,18 @@ const layer = L.esri.featureLayer({
     //if (!f) { f = feature;  console.log(feature) }
     let c;
     let prop = feature.properties.USA_WIND
-    if (prop < 64 && prop >= 34) { c = 'red' }
-    if (prop >= 64 && prop < 96) { c = 'green' }
-    if (prop >= 96) { c = 'blue' };
+    if (prop < 64 && prop >= 34) { c = config.stormTypes['named_storm']['fill'] }
+    if (prop >= 64 && prop < 96) { c = config.stormTypes['hurricane']['fill'] }
+    if (prop >= 96) { c = config.stormTypes['major_hurricane']['fill'] };
     if (!c) { c = 'white' }
-    return { color: c, opacity: .9, weight: 5 };
+    return { color: c, opacity: 1, weight: 5 }
   },
-  where: where_factory()
+  where: '1=0'
 }).addTo(map);
 
+graph.layer = layer
+
+/*
 const feature_info = document.getElementById('feature-info')
 
 layer.on('mouseover', function (event) {

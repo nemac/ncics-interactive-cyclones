@@ -1,9 +1,9 @@
 
 export const config = {
   title: 'North Atlantic West of 60°W: 1950-2020',
-  width: 800,
-  height: 500,
-  margin: { left: 80, right: 0, top: 15, bottom: 60 },
+  width: 600,
+  height: 600,
+  margin: { left: 80, right: 10, top: 15, bottom: 60 },
   yearStart: 1950,
   yearEnd: 2020,
   yAxisTitle: 'Tropical Cyclone Days (per year)',

@@ -1,5 +1,7 @@
 import * as config from './config'
 
+export const whereFactory = (year, stormWhere) => `YEAR=${year} AND ${stormWhere}`
+
 export const getMaxYear = (data) => {
   let max = 0
   for (let k of Object.keys(data)) {

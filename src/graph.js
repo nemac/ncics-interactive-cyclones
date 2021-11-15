@@ -63,7 +63,7 @@ export class Graph {
   }
 
   initPlot() {
-    return d3.select('#plot').append('svg')
+    return d3.select('#graph')
       .attr('width', this.width)
       .attr('height', this.height)
   }
@@ -95,7 +95,7 @@ export class Graph {
   }
 
   initXAxis() {
-    this.xAxis.call(d3.axisBottom(this.x))
+    this.xAxis.call(d3.axisBottom(this.x).tickSizeOuter(0))
       .selectAll('text')
         .style('text-anchor', 'end')
         .attr('dx', '-.5em')
@@ -209,19 +209,17 @@ export class Graph {
         .attr('x', d => this.x(d.year))
         .attr('y', this.y(0))
         .attr('fill', this.stormTypes[key].fill)
-        .on('mouseenter', d => this.toggleTooltip(key, d.year, true))
-        .on('mouseout', d => this.toggleTooltip(key, d.year, false))
+        .on('mouseenter', d => {
+          this.toggleTooltip(key, d.year, true)
+          const where = util.whereFactory(d.year, this.stormTypes[key]['where'])
+          this.layer.setWhere(where)
+        })
+        .on('mouseout', d => {
+          this.layer.setWhere('1=0')
+          this.toggleTooltip(key, d.year, false)
+        })
 
     this.stormTypes[key].bars = bars
-  }
-
-  toggleTooltip(key, year, showTooltip) {
-    d3.select(`#data-tooltip--${key}--${year}--rect`)
-      .attr('style', showTooltip ? '' : 'display: none')
-      .raise()
-    d3.select(`#data-tooltip--${key}--${year}--text`)
-      .attr('style', showTooltip ? '' : 'display: none')
-      .raise()
   }
 
   calcTooltipX(d) {
@@ -236,6 +234,15 @@ export class Graph {
 
   removeTooltips() {
     d3.selectAll('.data-tooltips').remove()
+  }
+
+  toggleTooltip(key, year, showTooltip) {
+    d3.select(`#data-tooltip--${key}--${year}--rect`)
+      .attr('style', showTooltip ? '' : 'display: none')
+      .raise()
+    d3.select(`#data-tooltip--${key}--${year}--text`)
+      .attr('style', showTooltip ? '' : 'display: none')
+      .raise()
   }
 
   initTooltips(key) {
