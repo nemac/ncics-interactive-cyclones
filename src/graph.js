@@ -213,6 +213,15 @@ export class Graph {
           this.toggleTooltip(key, d.year, true)
           const where = util.whereFactory(d.year, this.stormTypes[key]['where'])
           this.layer.setWhere(where)
+          this.layer.setStyle(feature => {
+            let c;
+            let prop = feature.properties.USA_WIND
+            if (prop < 64 && prop >= 34) c = this.stormTypes['named_storm']['fill'] 
+            if (prop >= 64 && prop < 96) c = this.stormTypes['hurricane']['fill'] 
+            if (prop >= 96) c = this.stormTypes['major_hurricane']['fill']
+            if (!c) { c = 'white' }
+            return { color: c, opacity: 1, weight: 5 }
+          })
         })
         .on('mouseout', d => {
           this.layer.setWhere('1=0')
