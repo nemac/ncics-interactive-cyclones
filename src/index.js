@@ -50,17 +50,30 @@ yearEndSelect.addEventListener('change', function () {
 })
 
 // Map
-// Where clause generator
-
 const fitBounds = [
   {lat: 50.0, lng: -60},
   {lat: 5, lng: -100}
 ]
 const map = L.map('map').fitBounds(fitBounds)
-
 const basemap = L.esri.basemapLayer('Streets').addTo(map);
 
 window.map = map
+
+const TrackInfoMapControl = L.Control.extend({
+  options: {
+    position: 'topright'
+  },
+  onAdd: function (map) {
+    const e = document.createElement('div')
+    e.id = 'track-info-map-control'
+    e.classList.add('hidden')
+    return e
+  }
+})
+
+const control = new TrackInfoMapControl()
+
+window.map.addControl(control)
 
 // dummy feature for logging
 //let f;

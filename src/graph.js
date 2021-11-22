@@ -211,6 +211,35 @@ export class Graph {
         .attr('fill', this.stormTypes[key].fill)
         .on('mouseenter', d => {
           this.toggleTooltip(key, d.year, true)
+        })
+        .on('click', d => {
+          const index = d.year - this.yearStart
+          const ns_d = this.getActiveData('named_storm')[index]
+          const h_d = this.getActiveData('hurricane')[index]
+          const mh_d = this.getActiveData('major_hurricane')[index]
+          const trackInfoControl = document.getElementById('track-info-map-control')
+          trackInfoControl.innerHTML = `
+            <div>Year: ${d.year}</div>
+          `
+          if (key == 'named_storm') {
+            trackInfoControl.innerHTML += `
+              <div>Named Storm Days: ${ns_d.value}</div>
+              <div>Hurricane Days: ${h_d.value}</div>
+              <div>Major Hurricane Days: ${mh_d.value}</div>
+            ` 
+          }
+          if (key == 'hurricane') {
+            trackInfoControl.innerHTML += `
+              <div>Hurricane Days: ${h_d.value}</div>
+              <div>Major Hurricane Days: ${mh_d.value}</div>
+            `
+          }
+          if (key == 'major_hurricane') {
+            trackInfoControl.innerHTML += `
+              <div>Major Hurricane Days: ${mh_d.value}</div>
+            `
+          }
+          trackInfoControl.classList.remove('hidden')
           const where = util.whereFactory(d.year, this.stormTypes[key]['where'])
           this.layer.setWhere(where)
           this.layer.setStyle(feature => {
@@ -224,7 +253,7 @@ export class Graph {
           })
         })
         .on('mouseout', d => {
-          this.layer.setWhere('1=0')
+          //this.layer.setWhere('1=0')
           this.toggleTooltip(key, d.year, false)
         })
 
@@ -289,13 +318,19 @@ export class Graph {
 
     tooltip_text.append('tspan')
       .attr('x', d => this.calcTooltipX(d) + text_margin.left)
-      .attr('y', d => this.y(d.value) - this.TOOLTIP_HEIGHT/2 - text_margin.top)
+      .attr('y', d => this.y(d.value) - this.TOOLTIP_HEIGHT/1.5 - text_margin.top)
       .html(d => `Year: ${d.year}`)
 
     tooltip_text.append('tspan')
       .attr('x', d => this.calcTooltipX(d) + text_margin.left)
-      .attr('y', d => this.y(d.value) - text_margin.top)
+      .attr('y', d => this.y(d.value) - this.TOOLTIP_HEIGHT/2.8 - text_margin.top)
       .html(d => `${this.stormTypes[key].tooltip}: ${d.value}`)
+
+    tooltip_text.append('tspan')
+      .attr('x', d => this.calcTooltipX(d) + text_margin.left)
+      .attr('y', d => this.y(d.value) - this.TOOLTIP_HEIGHT/15 - text_margin.top)
+      .attr('style', 'font-style: italic')
+      .html('Click to analyze storm tracks')
 
     this.stormTypes[key].tooltips = tooltips
   }

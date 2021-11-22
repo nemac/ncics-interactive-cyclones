@@ -1,11 +1,40 @@
 
-body {
+#track-info-map-control {
+    background-color: white;
+    padding: 15px;
+    line-height: 1.6;
+    font-family: Arial Narrow, serif;
+    font-size: 1.2em;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+#track-info-map-control.hidden {
+    display: none;
+}
+
+#tropical-cyclone-days-wrapper {
     font-family: Arial Narrow, serif;
     margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
     padding: 0;
     width: 1200px;
+}
+
+#legend-container {
+    width: 50%;
+}
+
+#legend-container svg {
+    height: 100%;
+}
+
+.row {
+  height: 200px;
+}
+
+.flex-container {
     display: flex;
 }
 
@@ -14,8 +43,11 @@ body {
     padding-left: 1%;
 }
 
+#map-info {
+}
+
 #map {
-    height: 600px;
+    height: 440px;
     width: 95%;
     border: 1px solid black;
 }
@@ -26,7 +58,7 @@ body {
 
 .data-tooltips .tooltip {
     width: 180px;
-    height: 60px;
+    height: 85px;
     font-size: 1.5em;
 }
 
@@ -43,7 +75,6 @@ body {
 }
 
 #graph-container {
-    display: flex;
 }
 
 #graph-title {
@@ -51,9 +82,9 @@ body {
     text-align: center;
 }
 
-#menu {
-    display: flex;
-    justify-content: right;
+#menu-container {
+    width: 50%;
+    /*justify-content: right;*/
 }
 
 #menu div {

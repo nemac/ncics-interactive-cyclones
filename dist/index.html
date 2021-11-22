@@ -22,11 +22,24 @@
 </head>
 
 <body>
-  <div id='graph-container'>
-    <div id='plot'>
-      <h2 id='graph-title'>Tropical Cyclone Days for the North Atlantic west of 60°</h2>
-      <svg id="graph"></svg>
-      <div id='menu'>
+  <div id='tropical-cyclone-days-wrapper'>
+    <h2 id='graph-title'>Tropical Cyclone Days for the North Atlantic west of 60°</h2>
+
+    <div class='flex-container'>
+      <div id='graph-container'>
+        <div id='plot'>
+          <svg id="graph"></svg>
+        </div>
+      </div>
+      <div id='map-container'>
+        <div id='map'></div>
+      </div>
+    </div>
+    <div class='row flex-container'>
+      <div id="legend-container">
+        <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 189.31 111.96"><rect x="136.78" width="52.29" height="36.42" fill="#0b539d"/><rect x="84.45" width="52.33" height="72.84" fill="#6baed6"/><rect x="32.16" width="52.29" height="108.9" fill="#c7dbee"/><line x1="136.78" y1="72.84" x2="135.28" y2="72.84" fill="none" stroke="#010101" stroke-linecap="round" stroke-miterlimit="10" stroke-width="0.5"/><line x1="132.2" y1="72.84" x2="35.2" y2="72.8" fill="none" stroke="#010101" stroke-linecap="round" stroke-miterlimit="10" stroke-width="0.5" stroke-dasharray="3.08 3.08"/><line x1="33.66" y1="72.8" x2="32.16" y2="72.79" fill="none" stroke="#010101" stroke-linecap="round" stroke-miterlimit="10" stroke-width="0.5"/><line x1="189.06" y1="36.41" x2="32.16" y2="36.29" fill="none" stroke="#010101" stroke-linecap="round" stroke-miterlimit="10" stroke-width="0.5" stroke-dasharray="3"/><line x1="84.45" y1="108.9" x2="32.16" y2="108.9" fill="none" stroke="#010101" stroke-linecap="round" stroke-miterlimit="10" stroke-width="0.5" stroke-dasharray="3"/><text transform="translate(44.59 15.21)" font-size="10" fill="#010101" font-family="ArialNarrow, Arial Narrow">Named<tspan x="0.23" y="12">Storms</tspan></text><text transform="translate(90.93 14.97)" font-size="10" fill="#010101" font-family="ArialNarrow, Arial Narrow">Hurricanes</text><text transform="translate(152.67 14.97)" font-size="10" fill="#fff" font-family="ArialNarrow, Arial Narrow">Major<tspan x="-9.57" y="12">Hurricanes</tspan></text><text transform="translate(3.38 108.9)" font-size="10" fill="#010101" font-family="ArialNarrow, Arial Narrow">39 mph</text><text transform="translate(3.38 72.64)" font-size="10" fill="#010101" font-family="ArialNarrow, Arial Narrow">74 mph</text><text transform="translate(0 36.64)" font-size="10" fill="#010101" font-family="ArialNarrow, Arial Narrow"><tspan letter-spacing="-0.06em">11</tspan><tspan x="7.92" y="0">1 mph</tspan></text></svg>
+      </div> <!-- legend-container -->
+      <div id='menu-container'>
         <div id="show-storm-types">
           <label><input type="checkbox" id='show-named-storms'/>Named Storms</label>
           <label><input type="checkbox" id='show-minor-hurricanes'/>Minor Hurricanes</label>
@@ -40,12 +53,10 @@
             <label>End: <select id="year-end-select"></select></label>
           </div>
         </div>
-      </div>
-    </div>
+      </div> <!-- menu-container -->
+    </div> <!-- row -->
   </div>
-  <div id='map-container'>
-    <div id='map'></div>
-  </div>
+
 </body>
 
 </html>
