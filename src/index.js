@@ -55,9 +55,14 @@ const fitBounds = [
   {lat: 5, lng: -100}
 ]
 const map = L.map('map').fitBounds(fitBounds)
-const basemap = L.esri.basemapLayer('Streets').addTo(map);
+
+// TODO move this
+const apiKey = "AAPK1601eedf080a4b05b76c0c5de702437c_xgYy0EXPcjGO2eMwG4EU50cuttu3Lsm1DQ3UBgIEInW9LJNfmuBUMYdxIei-cjU";
+const basemap = L.esri.Vector.vectorBasemapLayer('ArcGIS:DarkGray', { apiKey: apiKey })
 
 window.map = map
+
+basemap.addTo(map)
 
 const TrackInfoMapControl = L.Control.extend({
   options: {

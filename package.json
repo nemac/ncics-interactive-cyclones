@@ -14,7 +14,6 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
-    "esri-leaflet": "^3.0.3",
     "leaflet": "^1.7.1"
   }
 }

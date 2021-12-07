@@ -12,6 +12,7 @@
   <script src="https://unpkg.com/esri-leaflet@3.0.2/dist/esri-leaflet.js"
     integrity="sha512-myckXhaJsP7Q7MZva03Tfme/MSF5a6HC2xryjAM4FxPLHGqlh5VALCbywHnzs2uPoF/4G/QVXyYDDSkp5nPfig=="
     crossorigin=""></script>
+  <script src="https://unpkg.com/esri-leaflet-vector@3/dist/esri-leaflet-vector.js"></script>
 
   <!-- D3 4.13.0 from CDN to match version used on globalchange.gov -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.js"></script>
@@ -24,7 +25,51 @@
 <body>
   <div id='tropical-cyclone-days-wrapper'>
     <h2 id='graph-title'>Tropical Cyclone Days for the North Atlantic west of 60°</h2>
-
+    <div class="flex-container">
+      <div id="legend-container">
+        <div id="show-storm-types">
+          <label><input type="checkbox" id='show-named-storms'/><span></span></label>
+          <label><input type="checkbox" id='show-minor-hurricanes'/><span></span></label>
+          <label><input type="checkbox" id='show-major-hurricanes'/><span></span></label>
+        </div>
+        <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.6 101">
+          <g>
+            <rect class="cls-1" x="288.02" y="342.27" width="30" height="124" transform="translate(-299.22 328.94) rotate(-90)"/>
+            <rect class="cls-2" x="267.38" y="392.94" width="30" height="82.66" transform="translate(-349.86 338.31) rotate(-90)"/>
+            <rect class="cls-3" x="246.68" y="443.6" width="30" height="41.33" transform="translate(-400.55 347.61) rotate(-90)"/>
+            <g>
+              <line class="cls-4" x1="125.71" y1="10.93" x2="125.71" y2="12.43"/>
+              <line class="cls-5" x1="125.71" y1="15.4" x2="125.71" y2="97.19"/>
+              <line class="cls-4" x1="125.71" y1="98.68" x2="125.71" y2="100.18"/>
+            </g>
+            <text class="cls-6" transform="matrix(1, 0, 0, 1, 6.61, 85.91)">Named<tspan x="0.23" y="12">Storms</tspan></text>
+            <text class="cls-6" transform="translate(0 57.84) rotate(0.05)">Hurricanes</text>
+            <text class="cls-7" transform="translate(9.57 22.34)">Major<tspan x="-9.57" y="12">Hurricanes</tspan></text>
+            <text class="cls-6" transform="translate(136.89 8.58)"><tspan class="cls-8">11</tspan><tspan x="7.92" y="0">1 mph</tspan></text>
+            <text class="cls-6" transform="translate(98.66 8.58)">74 mph</text>
+            <text class="cls-6" transform="translate(57.52 8.58)">39 mph</text>
+            <g>
+              <line class="cls-4" x1="84.41" y1="11.3" x2="84.41" y2="12.8"/>
+              <line class="cls-5" x1="84.41" y1="15.77" x2="84.41" y2="97.57"/>
+              <line class="cls-4" x1="84.41" y1="99.05" x2="84.41" y2="100.55"/>
+            </g>
+            <g>
+              <line class="cls-4" x1="167.05" y1="11.3" x2="167.05" y2="12.8"/>
+              <line class="cls-5" x1="167.05" y1="15.77" x2="167.05" y2="97.57"/>
+              <line class="cls-4" x1="167.05" y1="99.05" x2="167.05" y2="100.55"/>
+            </g>
+          </g>
+        </svg>
+      </div> <!-- legend-container -->
+      <div id="year-select">
+        <div id="year-start-query">
+          <label>Start: <select id="year-start-select"></select></label>
+        </div>
+        <div id="year-start-query">
+          <label>End: <select id="year-end-select"></select></label>
+        </div>
+      </div> <!-- year-select -->
+    </div> <!-- flex-container -->
     <div class='flex-container'>
       <div id='graph-container'>
         <div id='plot'>
@@ -35,26 +80,6 @@
         <div id='map'></div>
       </div>
     </div>
-    <div class='row flex-container'>
-      <div id="legend-container">
-        <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 189.31 111.96"><rect x="136.78" width="52.29" height="36.42" fill="#0b539d"/><rect x="84.45" width="52.33" height="72.84" fill="#6baed6"/><rect x="32.16" width="52.29" height="108.9" fill="#c7dbee"/><line x1="136.78" y1="72.84" x2="135.28" y2="72.84" fill="none" stroke="#010101" stroke-linecap="round" stroke-miterlimit="10" stroke-width="0.5"/><line x1="132.2" y1="72.84" x2="35.2" y2="72.8" fill="none" stroke="#010101" stroke-linecap="round" stroke-miterlimit="10" stroke-width="0.5" stroke-dasharray="3.08 3.08"/><line x1="33.66" y1="72.8" x2="32.16" y2="72.79" fill="none" stroke="#010101" stroke-linecap="round" stroke-miterlimit="10" stroke-width="0.5"/><line x1="189.06" y1="36.41" x2="32.16" y2="36.29" fill="none" stroke="#010101" stroke-linecap="round" stroke-miterlimit="10" stroke-width="0.5" stroke-dasharray="3"/><line x1="84.45" y1="108.9" x2="32.16" y2="108.9" fill="none" stroke="#010101" stroke-linecap="round" stroke-miterlimit="10" stroke-width="0.5" stroke-dasharray="3"/><text transform="translate(44.59 15.21)" font-size="10" fill="#010101" font-family="ArialNarrow, Arial Narrow">Named<tspan x="0.23" y="12">Storms</tspan></text><text transform="translate(90.93 14.97)" font-size="10" fill="#010101" font-family="ArialNarrow, Arial Narrow">Hurricanes</text><text transform="translate(152.67 14.97)" font-size="10" fill="#fff" font-family="ArialNarrow, Arial Narrow">Major<tspan x="-9.57" y="12">Hurricanes</tspan></text><text transform="translate(3.38 108.9)" font-size="10" fill="#010101" font-family="ArialNarrow, Arial Narrow">39 mph</text><text transform="translate(3.38 72.64)" font-size="10" fill="#010101" font-family="ArialNarrow, Arial Narrow">74 mph</text><text transform="translate(0 36.64)" font-size="10" fill="#010101" font-family="ArialNarrow, Arial Narrow"><tspan letter-spacing="-0.06em">11</tspan><tspan x="7.92" y="0">1 mph</tspan></text></svg>
-      </div> <!-- legend-container -->
-      <div id='menu-container'>
-        <div id="show-storm-types">
-          <label><input type="checkbox" id='show-named-storms'/>Named Storms</label>
-          <label><input type="checkbox" id='show-minor-hurricanes'/>Minor Hurricanes</label>
-          <label><input type="checkbox" id='show-major-hurricanes'/>Major Hurricanes</label>
-        </div>
-        <div id="year-select">
-          <div id="year-start-query">
-            <label>Start: <select id="year-start-select"></select></label>
-          </div>
-          <div id="year-start-query">
-            <label>End: <select id="year-end-select"></select></label>
-          </div>
-        </div>
-      </div> <!-- menu-container -->
-    </div> <!-- row -->
   </div>
 
 </body>
