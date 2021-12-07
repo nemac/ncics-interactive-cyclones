@@ -50,17 +50,35 @@ yearEndSelect.addEventListener('change', function () {
 })
 
 // Map
-// Where clause generator
-
 const fitBounds = [
   {lat: 50.0, lng: -60},
   {lat: 5, lng: -100}
 ]
 const map = L.map('map').fitBounds(fitBounds)
 
-const basemap = L.esri.basemapLayer('Streets').addTo(map);
+// TODO move this
+const apiKey = "AAPK1601eedf080a4b05b76c0c5de702437c_xgYy0EXPcjGO2eMwG4EU50cuttu3Lsm1DQ3UBgIEInW9LJNfmuBUMYdxIei-cjU";
+const basemap = L.esri.Vector.vectorBasemapLayer('ArcGIS:DarkGray', { apiKey: apiKey })
 
 window.map = map
+
+basemap.addTo(map)
+
+const TrackInfoMapControl = L.Control.extend({
+  options: {
+    position: 'topright'
+  },
+  onAdd: function (map) {
+    const e = document.createElement('div')
+    e.id = 'track-info-map-control'
+    e.classList.add('hidden')
+    return e
+  }
+})
+
+const control = new TrackInfoMapControl()
+
+window.map.addControl(control)
 
 // dummy feature for logging
 //let f;

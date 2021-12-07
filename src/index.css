@@ -1,12 +1,65 @@
 
-body {
+#track-info-map-control {
+    background-color: white;
+    padding: 15px;
+    line-height: 1.6;
+    font-family: Arial Narrow, serif;
+    font-size: 1.2em;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+#track-info-map-control.hidden {
+    display: none;
+}
+
+#tropical-cyclone-days-wrapper {
     font-family: Arial Narrow, serif;
     margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
     padding: 0;
     width: 1200px;
+}
+
+#legend-container {
+    width: 280px;
+    position: relative;
+    left: 90px;
+}
+
+#legend-container input[type="checkbox"] {
+    visibility: hidden;
+}
+
+#legend-container input[type="checkbox"]:checked + span:before {
+    content: '\2714';
+    position: absolute;
+    top: -5px;
+}
+
+#legend-container label span {
+    font-size: 1.2em;
+    height: 15px;
+    width: 15px;
+    border: 1px solid grey;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+#legend-container svg {
+    height: 100%;
+    width: 250px;
+    position: absolute;
+    top: 0;
+    left: 20px;
+}
+
+.flex-container {
     display: flex;
+    flex-direction: row;
+    position: relative;
 }
 
 #map-container {
@@ -14,8 +67,11 @@ body {
     padding-left: 1%;
 }
 
+#map-info {
+}
+
 #map {
-    height: 600px;
+    height: 440px;
     width: 95%;
     border: 1px solid black;
 }
@@ -26,7 +82,7 @@ body {
 
 .data-tooltips .tooltip {
     width: 180px;
-    height: 60px;
+    height: 85px;
     font-size: 1.5em;
 }
 
@@ -43,7 +99,6 @@ body {
 }
 
 #graph-container {
-    display: flex;
 }
 
 #graph-title {
@@ -51,9 +106,9 @@ body {
     text-align: center;
 }
 
-#menu {
-    display: flex;
-    justify-content: right;
+#menu-container {
+    width: 50%;
+    /*justify-content: right;*/
 }
 
 #menu div {
@@ -61,8 +116,7 @@ body {
 }
 
 #show-storm-types {
-    width: 40%;
-    border: 1px solid black;
+    width: 28px;
 }
 
 #show-storm-types label {
@@ -71,6 +125,50 @@ body {
 }
 
 #year-select {
-    width: 40%;
-    border: 1px solid black;
+    position: relative;
+    left: 100px;
 }
+
+#year-select div {
+    margin: 15px;
+}
+
+svg .bar {
+    cursor: pointer;
+}
+
+/* Legend SVG */
+
+.cls-1 {
+  fill: #0b539d;
+}
+.cls-2 {
+  fill: #6baed6;
+}
+.cls-3 {
+  fill: #c7dbee;
+}
+.cls-4, .cls-5 {
+  fill: none;
+  stroke: #010101;
+  stroke-linecap: round;
+  stroke-miterlimit: 10;
+  stroke-width: 0.5px;
+}
+.cls-5 {
+  stroke-dasharray: 2.97 2.97;
+}
+.cls-6, .cls-7 {
+  font-size: 10px;
+  font-family: ArialNarrow, Arial Narrow;
+}
+.cls-6 {
+  fill: #010101;
+}
+.cls-7 {
+  fill: #231f20;
+}
+.cls-8 {
+  letter-spacing: -0.06em;
+}
+

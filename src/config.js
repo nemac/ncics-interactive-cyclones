@@ -2,7 +2,7 @@
 export const config = {
   title: 'North Atlantic West of 60°W: 1950-2020',
   width: 600,
-  height: 600,
+  height: 500,
   margin: { left: 80, right: 10, top: 15, bottom: 60 },
   yearStart: 1950,
   yearEnd: 2020,
@@ -38,7 +38,7 @@ export const config = {
   // Number of ticks between labels once TICK_LABEL_THRESDHOLD is met (inclusive)
   TICK_LABEL_STEP: 5,
   // These should be consistent with the CSS
-  TOOLTIP_HEIGHT: 60,
+  TOOLTIP_HEIGHT: 85,
   TOOLTIP_WIDTH: 180
 }
 
