@@ -19,14 +19,19 @@ const checkboxIds = {
 
 for (let key of Object.keys(checkboxIds)) {
   const el = document.getElementById(checkboxIds[key])
-  el.checked = config.stormTypes[key].active
-  el.addEventListener('change', function () {
-    if (this.checked) {
+  if (config.stormTypes[key].active) {
+    el.classList.add('active')
+  }
+  el.addEventListener('click', function () {
+    el.classList.toggle('active')
+    if (el.classList.contains('active')) {
       graph.stormTypes[key].active = true
       graph.showBars(key)
+      util.showLegendBar(key)
     } else {
       graph.stormTypes[key].active = false
       graph.hideBars(key)
+      util.hideLegendBar(key)
     }
   })
 }

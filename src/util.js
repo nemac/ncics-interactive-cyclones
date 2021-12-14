@@ -2,6 +2,23 @@ import * as config from './config'
 
 export const whereFactory = (year, stormWhere) => `YEAR=${year} AND ${stormWhere}`
 
+const getLegendBarId = key => `${key.replace('_', '-')}-legend-bar`
+
+export const hideLegendBar = key => {
+  const id = `#${getLegendBarId(key)}`
+  const el = d3.select(id)
+  el.node().dataset.height = el.attr('height')
+  el.transition(500)
+    .attr('height', 0)
+}
+
+export const showLegendBar = key => {
+  const id = `#${getLegendBarId(key)}`
+  const el = d3.select(id)
+  el.transition(500)
+    .attr('height', el.node().dataset.height)
+}
+
 export const getMaxYear = (data) => {
   let max = 0
   for (let k of Object.keys(data)) {

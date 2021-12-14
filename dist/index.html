@@ -26,62 +26,74 @@
   <div id='tropical-cyclone-days-wrapper'>
     <h2 id='graph-title'>Tropical Cyclone Days for the North Atlantic west of 60°</h2>
     <div class="flex-container">
-      <div id="legend-container">
-        <div id="show-storm-types">
-          <label><input type="checkbox" id='show-named-storms'/><span></span></label>
-          <label><input type="checkbox" id='show-minor-hurricanes'/><span></span></label>
-          <label><input type="checkbox" id='show-major-hurricanes'/><span></span></label>
-        </div>
-        <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.6 101">
-          <g>
-            <rect class="cls-1" x="288.02" y="342.27" width="30" height="124" transform="translate(-299.22 328.94) rotate(-90)"/>
-            <rect class="cls-2" x="267.38" y="392.94" width="30" height="82.66" transform="translate(-349.86 338.31) rotate(-90)"/>
-            <rect class="cls-3" x="246.68" y="443.6" width="30" height="41.33" transform="translate(-400.55 347.61) rotate(-90)"/>
-            <g>
-              <line class="cls-4" x1="125.71" y1="10.93" x2="125.71" y2="12.43"/>
-              <line class="cls-5" x1="125.71" y1="15.4" x2="125.71" y2="97.19"/>
-              <line class="cls-4" x1="125.71" y1="98.68" x2="125.71" y2="100.18"/>
-            </g>
-            <text class="cls-6" transform="matrix(1, 0, 0, 1, 6.61, 85.91)">Named<tspan x="0.23" y="12">Storms</tspan></text>
-            <text class="cls-6" transform="translate(0 57.84) rotate(0.05)">Hurricanes</text>
-            <text class="cls-7" transform="translate(9.57 22.34)">Major<tspan x="-9.57" y="12">Hurricanes</tspan></text>
-            <text class="cls-6" transform="translate(136.89 8.58)"><tspan class="cls-8">11</tspan><tspan x="7.92" y="0">1 mph</tspan></text>
-            <text class="cls-6" transform="translate(98.66 8.58)">74 mph</text>
-            <text class="cls-6" transform="translate(57.52 8.58)">39 mph</text>
-            <g>
-              <line class="cls-4" x1="84.41" y1="11.3" x2="84.41" y2="12.8"/>
-              <line class="cls-5" x1="84.41" y1="15.77" x2="84.41" y2="97.57"/>
-              <line class="cls-4" x1="84.41" y1="99.05" x2="84.41" y2="100.55"/>
-            </g>
-            <g>
-              <line class="cls-4" x1="167.05" y1="11.3" x2="167.05" y2="12.8"/>
-              <line class="cls-5" x1="167.05" y1="15.77" x2="167.05" y2="97.57"/>
-              <line class="cls-4" x1="167.05" y1="99.05" x2="167.05" y2="100.55"/>
-            </g>
-          </g>
-        </svg>
-      </div> <!-- legend-container -->
-      <div id="year-select">
-        <div id="year-start-query">
-          <label>Start: <select id="year-start-select"></select></label>
-        </div>
-        <div id="year-start-query">
-          <label>End: <select id="year-end-select"></select></label>
-        </div>
-      </div> <!-- year-select -->
-    </div> <!-- flex-container -->
-    <div class='flex-container'>
-      <div id='graph-container'>
-        <div id='plot'>
-          <svg id="graph"></svg>
-        </div>
-      </div>
-      <div id='map-container'>
-        <div id='map'></div>
-      </div>
-    </div>
-  </div>
+      <div class="flex-column">
+        <div id="controls-container">
 
+          <div id="legend-container">
+            <div id="show-storm-types">
+              <input type="button" id='show-major-hurricanes' value="Major Hurricanes">
+              <input type="button" id='show-minor-hurricanes' value="Hurricanes">
+              <input type="button" id='show-named-storms'     value="Named Storms">
+            </div>
+            <div class="legend-svg-container">
+              <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 124.87 54.99">
+                <g>
+                  <rect id="major-hurricane-legend-bar" class="cls-1" x="295.52" y="342.27" width="15" height="124" transform="translate(-342.2 320.63) rotate(-90)"/>
+                  <rect id="hurricane-legend-bar" class="cls-2" x="274.78" y="377.94" width="15" height="82.66" transform="translate(-377.94 314.89) rotate(-90)"/>
+                  <rect id="named-storm-legend-bar"class="cls-3" x="254.18" y="413.23" width="15" height="41.33" transform="translate(-413.16 308.92) rotate(-90)"/>
+                  <g>
+                    <line class="cls-4" x1="82.73" y1="10.11" x2="82.73" y2="11.61"/>
+                    <line class="cls-5" x1="82.73" y1="14.81" x2="82.73" y2="51.64"/>
+                    <line class="cls-4" x1="82.73" y1="53.24" x2="82.73" y2="54.74"/>
+                  </g>
+                  <text class="cls-6" transform="translate(100.3 6.86)"><tspan class="cls-7">11</tspan><tspan x="6.34" y="0">1 mph</tspan></text>
+                  <text class="cls-6" transform="translate(61.44 6.86)">74 mph</text>
+                  <text class="cls-6" transform="translate(20.6 6.86)">39 mph</text>
+                  <g>
+                    <line class="cls-4" x1="41.43" y1="10.11" x2="41.43" y2="11.61"/>
+                    <line class="cls-8" x1="41.42" y1="14.81" x2="41.4" y2="51.64"/>
+                    <line class="cls-4" x1="41.4" y1="53.24" x2="41.4" y2="54.74"/>
+                  </g>
+                  <g>
+                    <line class="cls-4" x1="124.07" y1="10.11" x2="124.07" y2="11.61"/>
+                    <line class="cls-5" x1="124.07" y1="14.81" x2="124.07" y2="51.64"/>
+                    <line class="cls-4" x1="124.07" y1="53.24" x2="124.07" y2="54.74"/>
+                  </g>
+                </g>
+              </svg>
+            </div> <!-- legend-svg-container -->
+          </div> <!-- legend-container -->
+          <div id="year-select">
+            <div id="year-start-query">
+              <div class="label">
+                <label for="year-start-select">Start:</label>
+              </div>
+              <select id="year-start-select"></select>
+            </div>
+            <div id="year-start-query">
+              <div class="label">
+                <label for="year-end-select">End:</label>
+              </div>
+              <select id="year-end-select"></select> 
+            </div>
+            <div id="selected-year-container">
+              Selected: <span id="selected-year"></span>
+            </div>
+          </div> <!-- year-select -->
+        </div> <!-- controls-container -->
+        <div id='graph-container'>
+          <div id='plot'>
+            <svg id="graph"></svg>
+          </div>
+        </div>
+      </div> <!-- flex-column -->
+      <div class='flex-column'>
+        <div id='map-container'>
+          <div id='map'></div>
+        </div>
+      </div>
+    </div> <!-- flex-column -->
+  </div> <!-- flex-container -->
 </body>
 
 </html>
