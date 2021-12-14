@@ -218,6 +218,8 @@ export class Graph {
           const h_d = this.getActiveData('hurricane')[index]
           const mh_d = this.getActiveData('major_hurricane')[index]
           const trackInfoControl = document.getElementById('track-info-map-control')
+          const selectedYearSpan = document.getElementById('selected-year')
+          selectedYearSpan.innerHTML = d.year
           trackInfoControl.innerHTML = `
             <div>Year: ${d.year}</div>
           `
