@@ -33,12 +33,14 @@ export const config = {
       'active': true
     }
   },
+  stormTrackInfoCallToActionText: 'Click a storm track to view details here',
+  mapCallToActionText: 'Click a bar on the graph to see storm tracks for the year',
   // Stop labelling every x-axis tick after this many elements
   TICK_LABEL_THRESHOLD: 30,
   // Number of ticks between labels once TICK_LABEL_THRESDHOLD is met (inclusive)
   TICK_LABEL_STEP: 5,
   // These should be consistent with the CSS
-  TOOLTIP_HEIGHT: 85,
+  TOOLTIP_HEIGHT: 60,
   TOOLTIP_WIDTH: 180
 }
 

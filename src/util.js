@@ -1,8 +1,34 @@
 import * as config from './config'
 
+export const getLayerStyle = (feature, stormTypes)  => {
+  let c;
+  let prop = feature.properties.USA_WIND
+  if (stormTypes['named_storm'].active && prop >= 34) c = stormTypes['named_storm']['fill']
+  if (stormTypes['hurricane'].active && prop >= 64) c = stormTypes['hurricane']['fill']
+  if (stormTypes['major_hurricane'].active && prop >= 96) c = stormTypes['major_hurricane']['fill']
+  return { color: c, opacity: 1, weight: 5 }
+}
+
 export const whereFactory = (year, stormWhere) => `YEAR=${year} AND ${stormWhere}`
 
 const getLegendBarId = key => `${key.replace('_', '-')}-legend-bar`
+const getLegendMetricId = key => `${key.replace('_', '-')}-selected-year-metric`
+
+const setLegendMetric = (key, val) => {
+  const id = getLegendMetricId(key)
+  const el = document.getElementById(id)
+  el.innerHTML = val
+}
+
+export const addMapControlEventListeners = el => {
+  L.DomEvent.disableClickPropagation(el)
+}
+
+export const setLegendMetrics = (ns_val, h_val, mh_val) => {
+  setLegendMetric('named_storm', ns_val)
+  setLegendMetric('hurricane', h_val)
+  setLegendMetric('major_hurricane', mh_val)
+}
 
 export const hideLegendBar = key => {
   const id = `#${getLegendBarId(key)}`
