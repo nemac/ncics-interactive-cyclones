@@ -191,6 +191,8 @@ export class Graph {
     })
   }
 
+  setLayer(layer) { this.layer = layer }
+
   initBars(key) {
     const dataset = this.getActiveData(key)
     const bars = this.plot.append('g')
@@ -217,42 +219,16 @@ export class Graph {
           const ns_d = this.getActiveData('named_storm')[index]
           const h_d = this.getActiveData('hurricane')[index]
           const mh_d = this.getActiveData('major_hurricane')[index]
-          const trackInfoControl = document.getElementById('track-info-map-control')
+          const mapCallToActionControl = document.getElementById('map-control-call-to-action')
+          mapCallToActionControl.classList.add('hidden')
+          const trackInfoControl = document.getElementById('map-control-track-info')
           const selectedYearSpan = document.getElementById('selected-year')
           selectedYearSpan.innerHTML = d.year
-          trackInfoControl.innerHTML = `
-            <div>Year: ${d.year}</div>
-          `
-          if (key == 'named_storm') {
-            trackInfoControl.innerHTML += `
-              <div>Named Storm Days: ${ns_d.value}</div>
-              <div>Hurricane Days: ${h_d.value}</div>
-              <div>Major Hurricane Days: ${mh_d.value}</div>
-            ` 
-          }
-          if (key == 'hurricane') {
-            trackInfoControl.innerHTML += `
-              <div>Hurricane Days: ${h_d.value}</div>
-              <div>Major Hurricane Days: ${mh_d.value}</div>
-            `
-          }
-          if (key == 'major_hurricane') {
-            trackInfoControl.innerHTML += `
-              <div>Major Hurricane Days: ${mh_d.value}</div>
-            `
-          }
           trackInfoControl.classList.remove('hidden')
-          const where = util.whereFactory(d.year, this.stormTypes[key]['where'])
+          const where = util.whereFactory(d.year, this.stormTypes['named_storm']['where'])
           this.layer.setWhere(where)
-          this.layer.setStyle(feature => {
-            let c;
-            let prop = feature.properties.USA_WIND
-            if (prop < 64 && prop >= 34) c = this.stormTypes['named_storm']['fill'] 
-            if (prop >= 64 && prop < 96) c = this.stormTypes['hurricane']['fill'] 
-            if (prop >= 96) c = this.stormTypes['major_hurricane']['fill']
-            if (!c) { c = 'white' }
-            return { color: c, opacity: 1, weight: 5 }
-          })
+          this.layer.setStyle(feature => util.getLayerStyle(feature, this.stormTypes))
+          this.yearActive = d.year
         })
         .on('mouseout', d => {
           //this.layer.setWhere('1=0')
@@ -269,7 +245,12 @@ export class Graph {
   }
 
   calcTooltipY(d) {
-    // TODO
+    const normal = this.y(d.value)
+    const cutoff = normal - this.TOOLTIP_HEIGHT
+    if (cutoff < 0) {
+      return normal + this.TOOLTIP_HEIGHT/3
+    }
+    return normal
   }
 
   removeTooltips() {
@@ -297,7 +278,7 @@ export class Graph {
             .attr('id', d => `data-tooltip--${key}--${d.year}--rect`)
             .attr('class', 'tooltip')
             .attr('x', d => this.calcTooltipX(d))
-            .attr('y', d => this.y(d.value) - this.TOOLTIP_HEIGHT)
+            .attr('y', d => this.calcTooltipY(d) - this.TOOLTIP_HEIGHT)
             .attr('style', 'display: none;')
             .attr('data-year', d => d.year)
             .attr('data-value', d => d.value)
@@ -314,25 +295,19 @@ export class Graph {
               .attr('style', 'display: none')
               .attr('text-anchor', 'start')
               .attr('x', d => this.calcTooltipX(d))
-              .attr('y', d => this.y(d.value))
+              .attr('y', d => this.calcTooltipY(d))
 
     const text_margin = { left: 8, top: 8 }
 
     tooltip_text.append('tspan')
       .attr('x', d => this.calcTooltipX(d) + text_margin.left)
-      .attr('y', d => this.y(d.value) - this.TOOLTIP_HEIGHT/1.5 - text_margin.top)
+      .attr('y', d => this.calcTooltipY(d) - this.TOOLTIP_HEIGHT/2 - text_margin.top)
       .html(d => `Year: ${d.year}`)
 
     tooltip_text.append('tspan')
       .attr('x', d => this.calcTooltipX(d) + text_margin.left)
-      .attr('y', d => this.y(d.value) - this.TOOLTIP_HEIGHT/2.8 - text_margin.top)
+      .attr('y', d => this.calcTooltipY(d) - this.TOOLTIP_HEIGHT/12 - text_margin.top)
       .html(d => `${this.stormTypes[key].tooltip}: ${d.value}`)
-
-    tooltip_text.append('tspan')
-      .attr('x', d => this.calcTooltipX(d) + text_margin.left)
-      .attr('y', d => this.y(d.value) - this.TOOLTIP_HEIGHT/15 - text_margin.top)
-      .attr('style', 'font-style: italic')
-      .html('Click to analyze storm tracks')
 
     this.stormTypes[key].tooltips = tooltips
   }

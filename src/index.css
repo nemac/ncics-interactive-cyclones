@@ -1,22 +1,28 @@
-
-
 /* Containers */
 
+#graph-title {
+    font-weight: normal;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.6em;
+}
 #tropical-cyclone-days-wrapper {
-    font-family: Arial Narrow, serif;
+    width: 1200px;
     margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
-    padding: 0;
-    width: 1200px;
+    padding: 15px;
+    padding-top: 0;
+    font-family: Arial Narrow, serif;
+    border: 1px solid black;
+    border-radius: 30px;
+    background-color: #fcfcfc;
 }
-
 .flex-container {
     display: flex;
     flex-direction: row;
     position: relative;
 }
-
 .flex-column {
     width: 50%;
 }
@@ -27,63 +33,59 @@
     height: 100%;
     padding-left: 1%;
 }
-
-#map-info {
-}
-
 #map {
-    height: 100%;
+    height: 97%;
     width: 95%;
     border: 1px solid black;
 }
 
 /** Map Controls **/
 
-#track-info-map-control {
+.map-control {
     background-color: white;
-    padding: 15px;
     line-height: 1.6;
     font-family: Arial Narrow, serif;
-    font-size: 1.2em;
     border: 1px solid black;
     border-radius: 10px;
+    background-color: white;
 }
-
-#track-info-map-control.hidden {
-    display: none;
+#map-control-track-info {
+    width: 130px;
+    padding: 10px;
+    text-align: left;
+    font-size: 1em;
+}
+#map-control-call-to-action {
+    width: 200px;
+    margin-bottom: 40%;
+    margin-right: 32%;
+    padding: 25px;
+    font-size: 1.8em;
+    text-align: center;
 }
 
 /* Graph */
 
-#graph-container {
-}
-
 .data-tooltips .tooltip {
+    /*
+      Note: in order for tooltips to format correctly,
+      TOOLTIP_HEIGHT and TOOLTIP_WIDTH need to be identical
+      to the values set below (see config.js).
+    */
     width: 180px;
-    height: 85px;
+    height: 60px;
     font-size: 1.5em;
 }
-
 .tick text {
     fill: #595959;
 }
-
 #y-axis-title {
     font-size: 1.3em;
 }
-
 #plot .tick {
     font-size: 1.5em;
 }
 
-#graph-container {
-}
-
-#graph-title {
-    height: 100px;
-    font-weight: normal;
-    text-align: center;
-}
 
 /* Controls */
 
@@ -91,11 +93,9 @@
     width: 50%;
     /*justify-content: right;*/
 }
-
 #menu div {
     margin: 10px;
 }
-
 #controls-container {
     flex-direction: column;
     display: flex;
@@ -104,14 +104,12 @@
 
 /** Legend **/
 
-#legend-container div {
+#legend-container > div {
     display: inline-block;
 }
-
 #legend-container svg {
     width: 220px;
 }
-
 #show-storm-types {
     width: 120px;
     position: relative;
@@ -119,7 +117,6 @@
     left: 4px;
     margin-left: 75px;
 }
-
 #show-storm-types input {
     border-radius: 3px;
     border-width: .5px;
@@ -129,18 +126,22 @@
     padding: 3px;
     background-color: #efefef;
 }
-
 #show-storm-types input:hover {
     background-color: #e5e5e5;
 }
-
 #show-storm-types input.active {
     color: #e8eaeb;
     background-color: #9ea6ab;
 }
-
 #show-storm-types input.active:hover {
     background-color: #939ba0;
+}
+.selected-year-storm-metrics {
+    height: 25px;
+}
+.selected-year-storm-metrics > div {
+    display: block;
+    height: 32px;
 }
 
 /** Select Years **/
@@ -148,64 +149,60 @@
 #year-select {
     margin-left: 80px;
 }
-
 #year-select > div {
     margin-right: 15px;
     display: inline-block;
 }
-
 #year-select .label {
     display: inline-block;
     width: 33px;
 }
-
 #year-select select {
     font-size: inherit;
     padding: 1px;
     text-align: right;
 }
-
 svg .bar {
     cursor: pointer;
 }
 
 /* Legend SVG */
 
-      .cls-1 {
-        fill: #0b539d;
-      }
+.cls-1 {
+  fill: #0b539d;
+}
+.cls-2 {
+  fill: #6baed6;
+}
+.cls-3 {
+  fill: #c7dbee;
+}
+.cls-4, .cls-5, .cls-8 {
+  fill: none;
+  stroke: #010101;
+  stroke-linecap: round;
+  stroke-miterlimit: 10;
+  stroke-width: 0.5px;
+}
+.cls-5 {
+  stroke-dasharray: 3.2 3.2;
+}
+.cls-6 {
+  font-size: 8px;
+  fill: #010101;
+  font-family: ArialNarrow, Arial Narrow;
+}
+.cls-7 {
+  letter-spacing: -0.06em;
+}
+.cls-8 {
+  stroke-dasharray: 3.2 3.2;
+}
 
-      .cls-2 {
-        fill: #6baed6;
-      }
 
-      .cls-3 {
-        fill: #c7dbee;
-      }
+/* Helpers */
 
-      .cls-4, .cls-5, .cls-8 {
-        fill: none;
-        stroke: #010101;
-        stroke-linecap: round;
-        stroke-miterlimit: 10;
-        stroke-width: 0.5px;
-      }
-
-      .cls-5 {
-        stroke-dasharray: 3.2 3.2;
-      }
-
-      .cls-6 {
-        font-size: 8px;
-        fill: #010101;
-        font-family: ArialNarrow, Arial Narrow;
-      }
-
-      .cls-7 {
-        letter-spacing: -0.06em;
-      }
-
-      .cls-8 {
-        stroke-dasharray: 3.2 3.2;
-      }
+.hidden {
+    display: none;
+}
 
